@@ -117,6 +117,8 @@
       <figcaption style="font-style: italic;">Illustration of the pipeline, only matching red to green is shown for clarity</figcaption>
     </figure>
   </div>
+
+
 </section>
 <!-- End Naive Method -->
 
@@ -125,20 +127,132 @@
   <img src="static/images/cathedral_unaligned.png" />
   <!-- The after image is last -->
   <img src="static/images/cathedral_aligned.png" />
- </div>
+</div>
+
+<div id="container2">
+  <!-- The before image is first -->
+  <img src="static/images/monastery_unaligned.png" />
+  <!-- The after image is last -->
+  <img src="static/images/monastery_aligned.png" />
+</div>
+
+<div id="container3">
+  <!-- The before image is first -->
+  <img src="static/images/tobolsk_unaligned.png" />
+  <!-- The after image is last -->
+  <img src="static/images/tobolsk_aligned.png" />
+</div>
 
 
-<!-- Statcounter Slider-->
-<script>
-  $(document).ready(function() {
-    $(".twentytwenty-container").twentytwenty();
-  });
-</script>
-<!-- End Statcounter Slider-->
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Pyramid</h2>
+        <div class="content has-text-justified">
+          <p>
+            ... (teaser)
+          </p>
+        </div>
+      </div>
+    </div>
+    <figure style="display: flex; flex-direction: column; align-items: center;">
+      <img src="static/images/teaser_naive.png" style="max-width: 150%; height: auto;"/>
+      <figcaption style="font-style: italic;">Illustration of the pipeline, only matching red to green is shown for clarity</figcaption>
+    </figure>
+  </div>
+
+results
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Bell and Whistles</h2>
+        <div class="content has-text-justified">
+          <p>
+            ... (teaser)
+          </p>
+        </div>
+      </div>
+    </div>
+    <figure style="display: flex; flex-direction: column; align-items: center;">
+      <img src="static/images/teaser_naive.png" style="max-width: 150%; height: auto;"/>
+      <figcaption style="font-style: italic;">Illustration of the pipeline, only matching red to green is shown for clarity</figcaption>
+    </figure>
+  </div>
+
+results
+</section>
+
+cut margins!
+<!-- Image carousel -->
+<section class="hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Gallery of Aligned Photo</h2>
+        <div class="content has-text-justified">
+          <p>
+            This is a gallery of all the images aligned using the Canny Edge Detector as described in the previous section. The optimal offsets and the runtime (on a I7 13700K 64GB RAM Ubuntu 20.04 workstation) are also shown. We can see that the average runtime is about one minute.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <img src="static/images/final_results/cathedral_aligned.png"/>
+          <h2 class="subtitle has-text-centered">
+            Cathedral Aligned
+            <br>
+            Optimal offsets: R: (-12, -3), G: (-5, -2)
+            <br>
+            Runtime: 0.3s
+          </h2>
+        </div>
+        <div class="item">
+          <img src="static/images/final_results/church_aligned.png"/>
+          <h2 class="subtitle has-text-centered">
+            Cathedral Aligned
+            <br>
+            Optimal offsets: R: (-58, 4), G: (-24, -4)
+            <br>
+            Runtime: 53.9s
+          </h2>
+        </div>
+        <div class="item">
+          <img src="static/images/final_results/emir_aligned.png"/>
+          <h2 class="subtitle has-text-centered">
+            Cathedral Aligned
+            <br>
+            Optimal offsets: R: (-107, -40), G: (-49, -24)
+            <br>
+            Runtime: 53.7s
+          </h2>
+        </div>
+        <div class="item">
+          <img src="static/images/final_results/harvesters_aligned.png"/>
+          <h2 class="subtitle has-text-centered">
+            Cathedral Aligned
+            <br>
+            Optimal offsets: R: (-124, -14), G: (-60, -18)
+            <br>
+            Runtime: 54.0s
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End image carousel -->
 
 
 
-  <footer class="footer">
+<footer class="footer">
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-8">
@@ -162,12 +276,31 @@
 <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 
     <!-- End of Statcounter Code -->
-
   </body>
   </html>
   <script>
   $(function(){
     $("#container1").twentytwenty({
+      default_offset_pct: 0.5,
+      orientation: 'horizontal', 
+      before_label: 'Unaligned',
+      after_label: 'Aligned',
+      no_overlay: true,
+      move_slider_on_hover: false,
+      move_with_handle_only: true, 
+      click_to_move: false
+    });
+    $("#container2").twentytwenty({
+      default_offset_pct: 0.5,
+      orientation: 'horizontal', 
+      before_label: 'Unaligned',
+      after_label: 'Aligned',
+      no_overlay: true,
+      move_slider_on_hover: false,
+      move_with_handle_only: true, 
+      click_to_move: false
+    });
+    $("#container3").twentytwenty({
       default_offset_pct: 0.5,
       orientation: 'horizontal', 
       before_label: 'Unaligned',
