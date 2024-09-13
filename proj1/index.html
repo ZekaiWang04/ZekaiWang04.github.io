@@ -116,77 +116,107 @@
       <img src="static/images/teaser_naive.png" style="max-width: 150%; height: auto;"/>
       <figcaption style="font-style: italic;">Illustration of the pipeline, only matching red to green is shown for clarity</figcaption>
     </figure>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <figure>
+        <img src="static/images/cathedral_unaligned.png" />
+        <img src="static/images/cathedral_aligned.png" />
+        <figcaption style="font-style: italic; text-align: center;">Cathedral, up is unaligned, down is aligned with brute force method</figcaption>
+      </figure>
+      
+      <figure>
+        <img src="static/images/monastery_unaligned.png" />
+        <img src="static/images/monastery_aligned.png" />
+        <figcaption style="font-style: italic; text-align: center;">Monastery, up is unaligned, down is aligned with brute force method</figcaption>
+      </figure>
+      
+      <figure>
+        <img src="static/images/tobolsk_unaligned.png" />
+        <img src="static/images/tobolsk_aligned.png" />
+        <figcaption style="font-style: italic; text-align: center;">Tobolsk, up is unaligned, down is aligned with brute force method</figcaption>
+      </figure>
+    </div>
   </div>
-
-
 </section>
 <!-- End Naive Method -->
 
-<div id="container1">
-  <!-- The before image is first -->
-  <img src="static/images/cathedral_unaligned.png" />
-  <!-- The after image is last -->
-  <img src="static/images/cathedral_aligned.png" />
-</div>
 
-<div id="container2">
-  <!-- The before image is first -->
-  <img src="static/images/monastery_unaligned.png" />
-  <!-- The after image is last -->
-  <img src="static/images/monastery_aligned.png" />
-</div>
-
-<div id="container3">
-  <!-- The before image is first -->
-  <img src="static/images/tobolsk_unaligned.png" />
-  <!-- The after image is last -->
-  <img src="static/images/tobolsk_aligned.png" />
-</div>
-
+<!-- Pyramid -->
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Gaussian Pyramid Approach</h2>
+        <div class="content has-text-justified">
+          <p>
+            Brute force method works well for small images. However, for large images with thousands of rows and columns (so the optimal alignment offsets are in the order of magnitude of 100), brute force solution with a large search window is extremely slow. Instead, I adopt a hierarchical approach that uses a Gaussian pyramid. The basic idea is to resize down the image (by first running through a 5x5 Gaussian filter and then downsample) until the image is small enough to use the brute force method. Then, from the smallest to the largest resized image, we use the optimal alignment offsets of the previously downsized image to initialize a brute force search at the current image level. At each level, we fix a small search window size so the runtime is managebale (this is acceptable since we are simply refining the alignment, and if the previous alignment is accurate we only need the search window size to be the same as the downswample ratio). The hyperparameters involved are the downsample threshold (when to stop resizing, I take 256x256), the fixed search window size (I take 10), and the downsample ratio at each step (I take 4). I use NCC for the similarity score for brute force search. Below are a few examples of the aligned images using the pyramid approach. We can see that although the method works well for Lady and Icon, it works poorly for Emir. The average runtime is about 5 minutes.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <figure>
+        <img src="static/images/lady_unaligned.png" />
+        <img src="static/images/lady_aligned.png" />
+        <figcaption style="font-style: italic; text-align: center;">Lady, up is unaligned, down is aligned with gaussian pyramid method</figcaption>
+      </figure>
+      
+      <figure>
+        <img src="static/images/emir_unaligned.png" />
+        <img src="static/images/emir_aligned.png" />
+        <figcaption style="font-style: italic; text-align: center;">Emir, up is unaligned, down is aligned with gaussian pyramid method</figcaption>
+      </figure>
+      
+      <figure>
+        <img src="static/images/icon_unaligned.png" />
+        <img src="static/images/icon_aligned.png" />
+        <figcaption style="font-style: italic; text-align: center;">Icon, up is unaligned, down is aligned with gaussian pyramid method</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<!-- End Pyramid -->
 
 <section class="section hero"></section>
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Pyramid</h2>
+        <h2 class="title is-3">Bells and Whistles: Canny Edge Detector</h2>
         <div class="content has-text-justified">
           <p>
-            ... (teaser)
+            As shown in the Emir photo above, the Gaussian Pyramid result using raw pixels as matching features is not perfect. For Bells and Whistles, I choose to use Canny Edge Detector to proprocess each of the BGR channels before calculating the NCC score and aligning the images. As its name suggests, the Canny Edge Detector detects edges of the image, assigning edges to 1 and non-edges to 0. Experiment shows that using edges as featues improves the alignment quality. Another advantage of using edges is that edge features are sparse, so if the numerical linear algebra library we use supports sparse matrix operation, the runtime will be a bit faster. Below is a visualization of the pipeline and also a few examples. 
           </p>
         </div>
       </div>
     </div>
     <figure style="display: flex; flex-direction: column; align-items: center;">
-      <img src="static/images/teaser_naive.png" style="max-width: 150%; height: auto;"/>
+      <img src="static/images/teaser_canny.png" style="max-width: 150%; height: auto;"/>
       <figcaption style="font-style: italic;">Illustration of the pipeline, only matching red to green is shown for clarity</figcaption>
     </figure>
-  </div>
-
-results
-</section>
-
-<section class="section hero"></section>
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Bell and Whistles</h2>
-        <div class="content has-text-justified">
-          <p>
-            ... (teaser)
-          </p>
-        </div>
-      </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <figure>
+        <img src="static/images/lady_unaligned.png" />
+        <img src="static/images/lady_aligned.png" />
+        <img src="static/images/lady_good.png" />
+        <figcaption style="font-style: italic; text-align: center;">Lady, up is unaligned, middle is aligned with guassian pyramid method using raw pixel features, down is aligned with gaussian pyramid method with edge features</figcaption>
+      </figure>
+      
+      <figure>
+        <img src="static/images/emir_unaligned.png" />
+        <img src="static/images/emir_aligned.png" />
+        <img src="static/images/emir_good.png" />
+        <figcaption style="font-style: italic; text-align: center;">Emir, up is unaligned, middle is aligned with guassian pyramid method using raw pixel features, down is aligned with gaussian pyramid method with edge features</figcaption>
+      </figure>
+      
+      <figure>
+        <img src="static/images/icon_unaligned.png" />
+        <img src="static/images/icon_aligned.png" />
+        <img src="static/images/icon_good.png" />
+        <figcaption style="font-style: italic; text-align: center;">Icon, up is unaligned, middle is aligned with guassian pyramid method using raw pixel features, down is aligned with gaussian pyramid method with edge features</figcaption>
+      </figure>
     </div>
-    <figure style="display: flex; flex-direction: column; align-items: center;">
-      <img src="static/images/teaser_naive.png" style="max-width: 150%; height: auto;"/>
-      <figcaption style="font-style: italic;">Illustration of the pipeline, only matching red to green is shown for clarity</figcaption>
-    </figure>
   </div>
-
-results
 </section>
 
-cut margins!
 <!-- Image carousel -->
 <section class="hero is-small">
   <div class="container is-max-desktop">
@@ -195,56 +225,502 @@ cut margins!
         <h2 class="title is-3">Gallery of Aligned Photo</h2>
         <div class="content has-text-justified">
           <p>
-            This is a gallery of all the images aligned using the Canny Edge Detector as described in the previous section. The optimal offsets and the runtime (on a I7 13700K 64GB RAM Ubuntu 20.04 workstation) are also shown. We can see that the average runtime is about one minute.
+            This is a gallery of all the images aligned using raw pixels and edges features with a pyramid approach, as described in the previous section. The optimal offsets (of the R and G channel with respect to the B channel) and the runtime (on a Intel I7 13700K 64GB RAM Ubuntu 20.04 workstation) are also listed. We can see that the average runtime is about one minute for large photos.
           </p>
         </div>
       </div>
     </div>
-  </div>
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <img src="static/images/final_results/cathedral_aligned.png"/>
-          <h2 class="subtitle has-text-centered">
-            Cathedral Aligned
-            <br>
-            Optimal offsets: R: (-12, -3), G: (-5, -2)
-            <br>
-            Runtime: 0.3s
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/final_results/church_aligned.png"/>
-          <h2 class="subtitle has-text-centered">
-            Cathedral Aligned
-            <br>
-            Optimal offsets: R: (-58, 4), G: (-24, -4)
-            <br>
-            Runtime: 53.9s
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/final_results/emir_aligned.png"/>
-          <h2 class="subtitle has-text-centered">
-            Cathedral Aligned
-            <br>
-            Optimal offsets: R: (-107, -40), G: (-49, -24)
-            <br>
-            Runtime: 53.7s
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/final_results/harvesters_aligned.png"/>
-          <h2 class="subtitle has-text-centered">
-            Cathedral Aligned
-            <br>
-            Optimal offsets: R: (-124, -14), G: (-60, -18)
-            <br>
-            Runtime: 54.0s
-          </h2>
-        </div>
-      </div>
+    <div style="display: flex; justify-content: center; gap: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Textile.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Textile (own choosing), unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Textile_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Textile (own choosing), aligned with raw pixel features
+          <br>
+          offsets: R: [-134, -34], G: [-71, -26]
+          <br>
+          runtime: 61.7s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Textile_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Textile (own choosing), aligned with edge features
+          <br>
+          offsets: R: [-133, -32], G: [-73, -27]
+          <br>
+          runtime: 49.6s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Gruppa.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Gruppa (own choosing), unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Gruppa_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Gruppa (own choosing), aligned with raw pixel features
+          <br>
+          offsets: R: [-114, -15], G: [-33, -8]
+          <br>
+          runtime: 57.9s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Gruppa_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Gruppa (own choosing), aligned with edge features
+          <br>
+          offsets: R: [-114, -13], G: [-33, -7]
+          <br>
+          runtime: 56.9s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Kurmy.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Kurmy (own choosing), unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Kurmy_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Kurmy (own choosing), aligned with raw pixel features
+          <br>
+          offsets: R: [-116, 38], G: [-25, 18]
+          <br>
+          runtime: 64.0s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/Kurmy_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Kurmy (own choosing), aligned with edge features
+          <br>
+          offsets: R: [-115, 38], G: [-25, 18]
+          <br>
+          runtime: 56.9s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/cathedral.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Cathedral, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/cathedral_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Cathedral, aligned with raw pixel features
+          <br>
+          offsets: R: [-12, -3], G: [-5, -2]
+          <br>
+          runtime: 1.70s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/cathedral_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Cathedral, aligned with edge features
+          <br>
+          offsets: R: [-12, -3], G: [-5, -2]
+          <br>
+          runtime: 0.26s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/church.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Church, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/church_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Church, aligned with raw pixel features
+          <br>
+          offsets: R: [-58, 4], G: [-25, -4]
+          <br>
+          runtime: 346.8s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/church_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Church, aligned with edge features
+          <br>
+          offsets: R: [-58, 4], G: [-24, -4]
+          <br>
+          runtime: 53.9s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/emir.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Emir, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/emir_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Emir, aligned with raw pixel features
+          <br>
+          offsets: R: [-196, 404], G: [-49, -24]
+          <br>
+          runtime: 319.8s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/emir_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Emir, aligned with edge features
+          <br>
+          offsets: R: [-107, -40], G: [-49, -24]
+          <br>
+          runtime: 53.9s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/harvesters.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Harvesters, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/harvesters_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Harvesters, aligned with raw pixel features
+          <br>
+          offsets: R: [-124, -14], G: [-60, -17]
+          <br>
+          runtime: 344.9s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/harvesters_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Harvesters, aligned with edge features
+          <br>
+          offsets: R: [-124, -14], G: [-60, -18]
+          <br>
+          runtime: 54.0s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/icon.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Icon, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/icon_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Icon, aligned with raw pixel features
+          <br>
+          offsets: R: [-89, -23], G: [-41, -17]
+          <br>
+          runtime: 354.3s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/icon_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Icon, aligned with edge features
+          <br>
+          offsets: R: [-90, -23], G: [-39, -16]
+          <br>
+          runtime: 52.2s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/lady.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Lady, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/lady_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Lady, aligned with raw pixel features
+          <br>
+          offsets: R: [-117, -12], G: [-55, -9]
+          <br>
+          runtime: 415.9s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/lady_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Lady, aligned with edge features
+          <br>
+          offsets: R: [-120, -13], G: [-56, -10]
+          <br>
+          runtime: 54.5s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/melons.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Melons, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/melons_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Melons, aligned with raw pixel features
+          <br>
+          offsets: R: [-116, 38], G: [-82, -11]
+          <br>
+          runtime: 64.0s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/melons_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Melons, aligned with edge features
+          <br>
+          offsets: R: [-179, -13], G: [-80, -10]
+          <br>
+          runtime: 349.3s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/monastery.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Monastery, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/monastery_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Monastery, aligned with raw pixel features
+          <br>
+          offsets: R: [-3, -2], G: [3, -2]
+          <br>
+          runtime: 1.87s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/monastery_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Monastery, aligned with edge features
+          <br>
+          offsets: R: [-3, -2], G: [3, -2]
+          <br>
+          runtime: 0.27s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/onion_church.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Onion Church, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/onion_church_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Onion Church, aligned with raw pixel features
+          <br>
+          offsets: R: [-108, -36], G: [-51, -27]
+          <br>
+          runtime: 350.0s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/onion_church_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Onion Church, aligned with edge features
+          <br>
+          offsets: R: [-107, -35], G: [-52, -24]
+          <br>
+          runtime: 55.0s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/sculpture.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Sculpture, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/sculpture_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Sculpture, aligned with raw pixel features
+          <br>
+          offsets: R: [-140, 27], G: [-33, 11]
+          <br>
+          runtime: 424.0s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/sculpture_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Sculpture, aligned with edge features
+          <br>
+          offsets: R: [-140, 27], G: [-33, 11]
+          <br>
+          runtime: 55.3s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/self_portrait.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Self Portrait, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/self_portrait_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Self Portrait, aligned with raw pixel features
+          <br>
+          offsets: R: [-176, -37], G: [-79, -29]
+          <br>
+          runtime: 350.3s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/self_portrait_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Self Portrait, aligned with edge features
+          <br>
+          offsets: R: [-175, -37], G: [-77, -29]
+          <br>
+          runtime: 53.3s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/three_generations.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Three Generations, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/three_generations_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Three Generations, aligned with raw pixel features
+          <br>
+          offsets: R: [-112, -11], G: [-53, -14]
+          <br>
+          runtime: 404.0s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/three_generations_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Three Generations, aligned with edge features
+          <br>
+          offsets: R: [-111, -8], G: [-55, -12]
+          <br>
+          runtime: 53.6s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/tobolsk.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Tobolsk, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/tobolsk_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Tobolsk, aligned with raw pixel features
+          <br>
+          offsets: R: [-7, -3], G: [-3, -3]
+          <br>
+          runtime: 1.68s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/tobolsk_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Tobolsk, aligned with edge features
+          <br>
+          offsets: R: [-7, -3], G: [-3, -3]
+          <br>
+          runtime: 0.26s
+        </figcaption>
+      </figure>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/train.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Train, unaligned
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/train_aligned.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Train, aligned with raw pixel features
+          <br>
+          offsets: R: [-87, -32], G: [-43, -6]
+          <br>
+          runtime: 352.6s
+        </figcaption>
+      </figure>
+      <figure style="text-align: center;">
+        <img src="static/images/final_results/train_good.png" style="max-width: 100%; height: auto;">
+        <figcaption style="font-style: italic;">
+          Train, aligned with edge features
+          <br>
+          offsets: R: [-85, -29], G: [-41, 0]
+          <br>
+          runtime: 54.0s
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -257,13 +733,11 @@ cut margins!
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
-
           <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
             You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
-
         </div>
       </div>
     </div>
@@ -278,37 +752,3 @@ cut margins!
     <!-- End of Statcounter Code -->
   </body>
   </html>
-  <script>
-  $(function(){
-    $("#container1").twentytwenty({
-      default_offset_pct: 0.5,
-      orientation: 'horizontal', 
-      before_label: 'Unaligned',
-      after_label: 'Aligned',
-      no_overlay: true,
-      move_slider_on_hover: false,
-      move_with_handle_only: true, 
-      click_to_move: false
-    });
-    $("#container2").twentytwenty({
-      default_offset_pct: 0.5,
-      orientation: 'horizontal', 
-      before_label: 'Unaligned',
-      after_label: 'Aligned',
-      no_overlay: true,
-      move_slider_on_hover: false,
-      move_with_handle_only: true, 
-      click_to_move: false
-    });
-    $("#container3").twentytwenty({
-      default_offset_pct: 0.5,
-      orientation: 'horizontal', 
-      before_label: 'Unaligned',
-      after_label: 'Aligned',
-      no_overlay: true,
-      move_slider_on_hover: false,
-      move_with_handle_only: true, 
-      click_to_move: false
-    });
-  });
-  </script>
