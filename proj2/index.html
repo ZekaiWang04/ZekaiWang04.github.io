@@ -333,7 +333,7 @@
 
           <br></br>
           <p style="text-align: justify;">
-            I have shown both the greyscale and the colorized version of the hybrid images. We can see that the colorized image is a bit off. This is because in the high frequency regime, the white balancing is very off. For example, the low-pass filtered image of Derek is accurate in terms of white balancing, yet the high-pass filtered image for Nutmeg is very off (most of it is just black, and for the part with color the color is very misaligned with the overall color of the original image). 
+            I have shown both the greyscale and the colorized version of the hybrid images. We can see that the colorized image is a bit off. This is because in the high frequency regime, the white balancing is very off. For example, the low-pass filtered image of Derek is accurate in terms of white balancing, yet the high-pass filtered image for Nutmeg is very off (most of it is just black, and for the part with color the color is very misaligned with the overall color of the original image). Thus, it works better to use color fo rthe low-frequency component but not the high frequency component. 
           </p>
           <figure>
             <img src="static/images/2.2/DerekPicture_low_colorized.png" style="width: 100%; height: auto; vertical-align: middle;" />
@@ -351,13 +351,132 @@
 <!-- End 2.2 -->
 
 
+
+<!-- 2.3 -->
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">2.3: Gaussian and Laplacian Stacks</h2>
+        <div class="content has-text-justified">
+          <p>
+           A Gaussian Stack is arrived by iteratively convolving an image with a Gaussian kernel. A Laplacian Stack is just the difference between two adjacent blurred images in the Gaussian Stack (the final image in the Laplacian Stack is simply copied from the final image in the Gaussian Stack). From first to last, the Laplacian stack's images contain high frequency to low frequency information about the image. By adding everything in the Laplacian Stack, we can reconstruct the original image. Below are the visualization of the 6 levels of the Laplacian Stacks applied on the images Apple and Orange, where kernel_size = 30, sigma = 30.
+          </p>
+          <figure>
+            <img src="static/images/2.3/apple.jpeg" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Apple (Original)</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.3/orange.jpeg" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Orange (Original)</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.3/laplacian_stack_apple_orange.png" style="width: 300%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Laplacian Pyramid, from left to right are level 0 through 5, up is Apple, low is Orange</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End 2.3 -->
+
+
+<!-- 2.4 -->
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">2.4: Multiresolution Blending (with Bells and Whistles)</h2>
+        <div class="content has-text-justified">
+          <p>
+            Applying the Gaussian Stack of a binary mask onto the laplacian stack of two images (and afterwards adding the laplacians up), we can use multiresolution blending to blend the two images, resulting in a smooth transition. The pipeline is visualized below. For Oraple, a more detailed illustration figure is also included. We observe that using color is fine and makes the image look better (bells & whistles).
+          </p>
+          <figure>
+            <img src="static/images/2.4/oraple.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Oraple (Blended Image; stack_depth = 30; for images kernel_size = 10, sigma = 50; for the mask kernel_size = 30, sigma = 100)</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.4/oraple_stack.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Illustration of Oraple; left to right: first 6 images in the Laplacian (for Apple and Orange) or Gaussian (for the binary mask) stacks; up is filter, middle is Apple, low is Orange, lowest is the blended image at that level. The mask is a simple vertical, 50-50 binary mask</figcaption>
+          </figure>
+
+          <br></br>
+          <p style="text-align: justify;">
+            Next is my icecream and Remy from Ratatouille.
+          </p>  
+          <figure>
+            <img src="static/images/2.4/remy_full.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Remy</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.4/icecream.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Icecream</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.4/remycream_mask.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Mask</figcaption>
+          </figure>
+          <figure></figure>
+            <img src="static/images/2.4/remycream.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Remycream (Blended Image; stack_depth = 30; for images kernel_size = 10, sigma = 50; for the mask kernel_size = 30, sigma = 200)</figcaption>
+          </figure>
+
+          <br></br>
+          <p style="text-align: justify;">
+            Next is the Pizza from Lucia's Berkeley and Pizzeria da Laura (I also recommend Rose Pizzeria!). Who says there can only be one topping style?
+          </p>  
+          <figure>
+            <img src="static/images/2.4/pizza_plate.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Pizza from Pizzeria da Laura</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.4/pizza_box.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Pizza from Lucia's Berkeley</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.4/pizza_mask.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Mask</figcaption>
+          </figure>
+          <figure></figure>
+            <img src="static/images/2.4/pizza.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Pizza Blended (Blended Image; stack_depth = 30; for images kernel_size = 10, sigma = 50; for the mask kernel_size = 50, sigma = 200)</figcaption>
+          </figure>
+
+          <br></br>
+          <p style="text-align: justify;">
+            Finally it's me and my robot friend! Plenty of slaves for my robot colony (quote from Interstellar)!
+          </p>  
+          <figure>
+            <img src="static/images/2.4/me_full.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Me at Cory 105, Cut Out</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.4/me_robot.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Me with My Robot Friend</figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/2.4/me_robot_mask.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">Mask</figcaption>
+          </figure>
+          <figure></figure>
+            <img src="static/images/2.4/me_me.png" style="width: 150%; height: auto; vertical-align: middle;" />
+            <figcaption style="font-style: italic; text-align: center;">I'm the Machine Spirit, Praise the Omnissiah (Blended Image; stack_depth = 30; for images kernel_size = 10, sigma = 50; for the mask kernel_size = 30, sigma = 200)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End 2.4 -->
+
 <footer class="footer">
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
           <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a>project page.
             You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
