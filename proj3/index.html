@@ -65,7 +65,7 @@
         <h2 class="title is-3">Project Overview</h2>
         <div class="content has-text-justified">
           <p>
-            In this project, I implemented a inverse warping function which enables morphing and averaging faces. Specifically, I first manually annoted two image (of me and George), computed the mean image, and computed a gif that morphes my face to George's. Then, I use the FEI human face dataset to compute the mean face of neutral and smiling faces. I used these faces to do morphing and make the image of me smile!
+            In this project, I implemented a inverse warping function which enables morphing and averaging faces. Specifically, I first manually annotated two image (of me and George), computed the mean image, and computed a gif that morphes my face to George's. Then, I use the FEI human face dataset to compute the mean face of neutral and smiling faces. I used these faces to do morphing and make the image of me smile!
           </p>
         </div>
       </div>
@@ -87,7 +87,7 @@
           </p>
           <figure>
             <img src="static/images/part1_illustration.png"/>
-            <figcaption>Keypoints and Triangulation, left: Zekai (me), right: George</figcaption>
+            <figcaption>Keypoints and Triangulation, left: Zekai (Me), right: George</figcaption>
           </figure>
         </div>
       </div>
@@ -108,7 +108,7 @@
           </p>
           <figure>
             <img src="static/images/part2_mean.png"/>
-            <figcaption>left: Zekai (me), middle: mid-way face, right: George</figcaption>
+            <figcaption>Mid-way Face, left: Zekai (Me), middle: mid-way face, right: George</figcaption>
           </figure>
         </div>
       </div>
@@ -144,28 +144,81 @@
         <h2 class="title is-3">Part 4: The "Mean Face" of a Pupulation</h2>
         <div class="content has-text-justified">
           <p>
-            I choose part of the <a href="https://fei.edu.br/~cet/facedatabase.html">FEI Face Database</a> as the dataset, which consists of 400 grayscale images of 200 individuals (100 male and 100 female). The individuals are mainly students and staff at Centro Universitário da FEI. For each individual, one photo is taken with the individual in a neutral expression, and the other photo is taken with the individual in a smiling expression. The dataset provides 46 corresponding keypoints for each image. I first computed the mean neutral geometry and the mean smiling geometry by taking the average of the keypoints' coordinates across the neutral and smiling faces. Then, I warp the neutral faces and the smiling faces to the mean geometry using inverse warping. Finally, I cross-dissolve the warpped images to get the mean neutral face and the mean smiling face. The mean faces are shown below (they are calculated by me, not the mean face provided by the dataset).
+            I choose part of the <a href="https://fei.edu.br/~cet/facedatabase.html">FEI Face Database</a> as the dataset, which consists of 400 grayscale images of 200 individuals (100 male and 100 female). The individuals are mainly students and staff at Centro Universitário da FEI. For each individual, one photo is taken with the individual in a neutral expression, and the other photo is taken with the individual in a smiling expression. The dataset annotation provides 46 corresponding keypoints for each image. I first computed the mean neutral geometry and the mean smiling geometry by taking the average of the keypoints' coordinates across the neutral and smiling faces. Then, I warp the neutral faces and the smiling faces to the mean geometry using inverse warping. Finally, I cross-dissolve the warpped images to get the mean neutral face and the mean smiling face. The mean faces are shown below (they are calculated by me, not the mean face provided by the dataset).
           </p>
           <figure>
             <img src="static/images/part4_mean_fei.png"/>
-            <figcaption>left: the Mean Neutral Face, right: the Mean Smiling Face</figcaption>
+            <figcaption>Mean Faces, left: the Mean Neutral Face, right: the Mean Smiling Face</figcaption>
           </figure>
           <p>
             For visualization purposes, below are a few examples of the neutral faces and the smiling faces in the dataset, as well as the warpped images to the mean geometry.
           </p>
-          <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
-            <figure style="text-align: center;">
-              <img src="static/images/part4_morphed_neutral.png" style="width: 100%; height: auto; vertical-align: middle;">
-              <figcaption>Neutral Faces, left: Original, right: Morphed to Mean Neutral Geometry</figcaption>
-            </figure>
-            <figure style="text-align: center;">
-              <img src="static/images/part4_morphed_smiling.png" style="width: 100%; height: auto; vertical-align: middle;">
-              <figcaption>Smiling Faces, left: Original, right: Morphed to Mean Smiling Geometry</figcaption>
-            </figure>
-          </div>
+          <figure style="text-align: center;">
+            <img src="static/images/part4_morphed_neutral.png" style="width: 60%; height: auto; vertical-align: middle;">
+            <figcaption>Neutral Faces, left: Original, right: Morphed to Mean Neutral Geometry</figcaption>
+          </figure>
+          <figure style="text-align: center;">
+            <img src="static/images/part4_morphed_smiling.png" style="width: 60%; height: auto; vertical-align: middle;">
+            <figcaption>Smiling Faces, left: Original, right: Morphed to Mean Smiling Geometry</figcaption>
+          </figure>
           <p>
-            After calculating 
+            After calculating the mean faces, I can morph my (neutral) picture to the mean neutral geometry, and can morph the mean neutral face to the geometry of my picture. For my picture, I select the same 46 keypoints and the 4 corners manually. The morphed images, as well as my origina picture and the mean neutral face, are shown below. For completeness, the keypoints of an image from the dataset and my iamge are also shown below.
           </p>
+          <figure>
+            <img src="static/images/part4_keypoints.png"/>
+            <figcaption>
+              Annotated Keypoings, left: Zekai (Manual Annotation), right: Example (from Dataset)
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/part4_me_mean.png"/>
+            <figcaption>
+              Morphing between Zekai and Mean Neutral Face <br>
+              upper left: Zekai (Me), <br>
+              upper right: Mean Neutral Face, <br>
+              lower left: Zekai Morphed to Mean Neutral Geometry, <br>
+              lower right:Mean Neutral Face Morphed to Zekai's Geometry
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 5: Caricatures: Extrapolating From the Mean</h2>
+        <div class="content has-text-justified">
+          <p>
+            For extrapolation, I only extrapolate geometry. Specifically, I take a affine combination of the coordinates of my pictures' keypoints and the mean neutral face's keypoints according to a factor: alpha. Alpha equaling 1 means the affine combination is exactly my original keypoints, and alpha equaling 0 means the afine combination is exactly the mean neutral face's keypoints. I choose alpha being 1.5 and -0.5 (thus extrapolating from my face and the mean neutral face), and the morphed faces of me are shown below.
+          </p>
+          <figure>
+            <img src="static/images/part5_extrapolation.png"/>
+            <figcaption>Caricatures, left: alhpa = 1.5 (Very Zekai), right: alpha = -0.5 (Opposite of Zekai)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Bells and Whistles: Making Me Smile</h2>
+        <div class="content has-text-justified">
+          <p>
+            As the great Joker of Gotham says, "Why so serious?". I want to make the picture of me smile! I extract a "smiling geometry vector", namely the difference between the mean smiling face's keypoints and the mean neutral face's keypoints. Then, I add the "smiling geometry vector" to my original keypoints to get the "smiling keypoints". Afterwards, I warp my original picture to the "smiling keypoints" using the inverse warping function. The original and the morphed images are shown below ... why so serious?
+          </p>
+          <figure>
+            <img src="static/images/why_so_serious.png"/>
+            <figcaption>Why So Serious, left: Original, right: Smiling</figcaption>
+          </figure>
         </div>
       </div>
     </div>
