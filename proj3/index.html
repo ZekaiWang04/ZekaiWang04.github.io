@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>CS 180 Project 3: Face Morphing</title>
+  <link rel="icon" type="image/x-icon" href="static/images/morphed.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.event.move.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.twentytwenty.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty-master/css/twentytwenty.css" type="text/css" media="screen" />
+
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Face Morphing</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="mailto:zekai.wang@berkeley.edu" target="_blank">Zekai Wang</a></span>
+                <span class="author-block">
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">UC Berkeley<br>CS 180 Fall 2024 Project 3</span>
+                  </div>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Project Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            In this project, I implemented a inverse warping function which enables morphing and averaging faces. Specifically, I first manually annoted two image (of me and George), computed the mean image, and computed a gif that morphes my face to George's. Then, I use the FEI human face dataset to compute the mean face of neutral and smiling faces. I used these faces to do morphing and make the image of me smile!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 1: Defining Correspondences</h2>
+        <div class="content has-text-justified">
+          <p>
+            I download the portrait of <a href="https://cal-cs180.github.io/fa23/hw/proj3/george_small.jpg">George</a> and a passport photo of myself. Then, I use the <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html">online tool</a> and manually select 54 corresponding keypoints on the two faces. I also add the 4 corners, making the total number of keypoints 58. Then, I used the scipy's Delaunay triangulation to triangulate the keypoints (I use the mean keypoints across the two images to generate the triangulation consistently). The keypoints and triangulation is shown below.
+          </p>
+          <figure>
+            <img src="static/images/part1_illustration.png"/>
+            <figcaption>Keypoints and Triangulation, left: Zekai (me), right: George</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 2: Computing the "Mid-way Face"</h2>
+        <div class="content has-text-justified">
+          <p>
+            I take the mean of the keypoints (across the two images) to form the mid-way geometry. Then, I warp the two images to the mid-way geometry using the inverse warping function. Specifically, I implemented the computeAffine function, which takes in 2D source triangle vertex coordinates and 2D target triangle vertex coordinates, and returns the affine transformation matrix that maps any homogeneous coordinate in the source triangle to that in the target triangle. To do so, I first do a change of basis to the source triangle, then I do another change of basis to map points to the target triangle. By using traingle masks and linear interpolation, I inverse-warp the two images to the mid-way geometry while only looping through the triangles, not the pixels. Finally, I cross-dissolve the warpped images to get the mid-way face. The mid-way face, as well as the original images of George and me, are shown below. The visual artifacts are mainly due to neck, clothing, and hair. The face itself is processed pretty well. 
+          </p>
+          <figure>
+            <img src="static/images/part2_mean.png"/>
+            <figcaption>left: Zekai (me), middle: mid-way face, right: George</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 3: The Morph Sequence</h2>
+        <div class="content has-text-justified">
+          <p>
+            We can control the morphing process by varying the wrap_frac and the dissolve_frac parameter. Since we are taking a convex combination of the keypoints from the two images to form the geometry, and using a convex combination of the pixel colors of the two warpped images to cross-dissolve, the wrap_frac and the dissolve_frac parameter can describe how close we are to each original image. I uniformly sample 31 ratios from 0 to 1, and plug it as both the wrap_frac and the dissolve_frac parameter to get the morph sequence. The gif of the morph sequence is shown below. Again, visual artifacts are mainly due to neck, clothing, and hair. Of course I am supposed to have more hair that our relative senior George!
+          </p>
+          <figure>
+            <img src="static/images/part3_zekai_george.gif"/>
+            <figcaption>The Morph Sequence from Zekai to George, and back to Zekai</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 4: The "Mean Face" of a Pupulation</h2>
+        <div class="content has-text-justified">
+          <p>
+            I choose part of the <a href="https://fei.edu.br/~cet/facedatabase.html">FEI Face Database</a> as the dataset, which consists of 400 grayscale images of 200 individuals (100 male and 100 female). The individuals are mainly students and staff at Centro Universitário da FEI. For each individual, one photo is taken with the individual in a neutral expression, and the other photo is taken with the individual in a smiling expression. The dataset provides 46 corresponding keypoints for each image. I first computed the mean neutral geometry and the mean smiling geometry by taking the average of the keypoints' coordinates across the neutral and smiling faces. Then, I warp the neutral faces and the smiling faces to the mean geometry using inverse warping. Finally, I cross-dissolve the warpped images to get the mean neutral face and the mean smiling face. The mean faces are shown below (they are calculated by me, not the mean face provided by the dataset).
+          </p>
+          <figure>
+            <img src="static/images/part4_mean_fei.png"/>
+            <figcaption>left: the Mean Neutral Face, right: the Mean Smiling Face</figcaption>
+          </figure>
+          <p>
+            For visualization purposes, below are a few examples of the neutral faces and the smiling faces in the dataset, as well as the warpped images to the mean geometry.
+          </p>
+          <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+            <figure style="text-align: center;">
+              <img src="static/images/part4_morphed_neutral.png" style="width: 100%; height: auto; vertical-align: middle;">
+              <figcaption>Neutral Faces, left: Original, right: Morphed to Mean Neutral Geometry</figcaption>
+            </figure>
+            <figure style="text-align: center;">
+              <img src="static/images/part4_morphed_smiling.png" style="width: 100%; height: auto; vertical-align: middle;">
+              <figcaption>Smiling Faces, left: Original, right: Morphed to Mean Smiling Geometry</figcaption>
+            </figure>
+          </div>
+          <p>
+            After calculating 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+ 
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+  </html>
