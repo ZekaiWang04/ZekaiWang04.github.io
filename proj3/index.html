@@ -125,7 +125,7 @@
         <h2 class="title is-3">Part 3: The Morph Sequence</h2>
         <div class="content has-text-justified">
           <p>
-            We can control the morphing process by varying the wrap_frac and the dissolve_frac parameter. Since we are taking a convex combination of the keypoints from the two images to form the geometry, and using a convex combination of the pixel colors of the two warpped images to cross-dissolve, the wrap_frac and the dissolve_frac parameter can describe how close we are to each original image. I uniformly sample 31 ratios from 0 to 1, and plug it as both the wrap_frac and the dissolve_frac parameter to get the morph sequence. The gif of the morph sequence is shown below. Again, visual artifacts are mainly due to neck, clothing, and hair. Of course I am supposed to have more hair that our relative senior George!
+            We can control the morphing process by varying the wrap_frac and the dissolve_frac parameter. Since we are taking a convex combination of the keypoints from the two images to form the geometry, and using a convex combination of the pixel colors of the two warpped images to cross-dissolve, the wrap_frac and the dissolve_frac parameter can describe how close we are to each original image. I uniformly sample 46 ratios from 0 to 1, and plug it as both the wrap_frac and the dissolve_frac parameter to get the morph sequence. The 30 fps gif of the morph sequence is shown below. Again, visual artifacts are mainly due to neck, clothing, and hair. Of course I am supposed to have more hair that our relative senior George!
           </p>
           <figure>
             <img src="static/images/part3_zekai_george.gif"/>
