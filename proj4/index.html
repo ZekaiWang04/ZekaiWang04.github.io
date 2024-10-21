@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>CS 180 Project 4: [Auto]Stitching Photo Mosaics</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.event.move.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.twentytwenty.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty-master/css/twentytwenty.css" type="text/css" media="screen" />
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              [Auto]Stitching Photo Mosaics</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="mailto:zekai.wang@berkeley.edu" target="_blank">Zekai Wang</a></span>
+                <span class="author-block">
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">UC Berkeley<br>CS 180 Fall 2024 Project 4</span>
+                  </div>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Project Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            In Part A of the project, I implemented image warping and mosaicing using perspective transformation (aka homography). Specifically, by spacifying image coordinate correspondences between two images, I can compute the 8 dof homography matrix between them, and use inverse warping and 2-band “Laplacian Stack” blending to produce an image mosaic. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Pictures</h2>
+        <div class="content has-text-justified">
+          <p>
+            I took three pairs of pictures (view from my balcony, view of Shattuck Avenue from my apartment's rooftop, and my apartment's lounge) such that the transforms between them are projective. I fix the zoom and try my best only to rotate with respect to the center of projection. Then, I use the <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html">online tool</a> and manually select a dozen of corresponding points in each pair of pictures. The pictures and the selected points are shown below.
+          </p>
+          <figure>
+            <img src="static/images/parta/balcony_showcase.png"/>
+            <figcaption>Balcony View and Keypoints</figcaption>
+            <img src="static/images/parta/shattuck_showcase.png"/>
+            <figcaption>Shattuck View and Keypoints</figcaption>
+            <img src="static/images/parta/lounge_showcase.png"/>
+            <figcaption>Lounge View and Keypoints</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Computing Homography and Warping the Images</h2>
+        <div class="content has-text-justified">
+          <p>
+            To recover the homography, we aim to find a matrix \(H = \begin{bmatrix} h_{11} & h_{12} & h_{13} \\ h_{21} & h_{22} & h_{23} \\ h_{31} & h_{32} & 1 \end{bmatrix} \in \mathbb{R}^{3 \times 3}\) such that, for each of the n pairs of corresponding points \((x^{(i)}, {x^{(i)}}')_{i=1}^n\) written in homogeneous coordinates, we have \({x^{(i)}}' \sim H x^{(i)}\) (\( \cdot \sim \cdot\) here means equals up to scale). We can formulate this as a system of linear equations: 
+            \[ \begin{bmatrix} & & & & & ... & & \\ x_1^{(i)} & x_2^{(i)} & 1 & 0 & 0 & 0 & -x_1^{(i)} {x_1^{(i)}}'&  -x_2^{(i)} {x_1^{(i)}}' \\ 0 & 0 & 0 & x_1^{(i)} & x_2^{(i)} & 1 & -x_1^{(i)} {x_2^{(i)}}' & -x_2^{(i)} {x_2^{(i)}}' \\ & & & & & ... & & \end{bmatrix} \begin{bmatrix} h_{11} \\ h_{12} \\ h_{13} \\ h_{21} \\ h_{22} \\ h_{23} \\ h_{31} \\ h_{32} \end{bmatrix} = \begin{bmatrix} ... \\ {x_1^{(i)}}' \\ {x_2^{(i)}}' \\ ... \end{bmatrix} \] 
+            Unless when we are using 4 pairs of corresponding points to rectify an image, usually the system is overconstraint, and we can use the least squares solution to approximate the homography matrix (for numerical stability, I use the min-norm solution calculated through the Moore-Penrose Pseudoinverse). 
+
+            To warp one image to another, I use inverse warping with nearest neighbor interpolation method (since linear and cubic interpolation produces blurred results). Since perspective transform preserves lines, I can trace where the corners of the source image land on the target image, and thus determine the edge/mask of the warped image in the target image. 
+          </p> 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Image Rectification</h2>
+        <div class="content has-text-justified">
+          <p>
+            With these, we are ready to rectify distorted squares/rectangles due to the angle I took the images. Below are two examples of rectification, one for rectifying the book cover for Foundations of Computer Vision, and another for rectifying the US Letter sized paper taped on the entrance of BAIR ... or should I say Berkeley Physics and Chemistry Lab. Note that the rectification is not perfect, and some parts of the rectified images are distorted. 
+          </p>
+          <figure>
+            <img src="static/images/parta/book_rectification.png"/>
+            <figcaption>Rectification of Book Cover, left: original, right: rectified</figcaption>
+            <img src="static/images/parta/meme_rectification.png"/>
+            <figcaption>Rectification of Meme, left: original, right: rectified</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Blending Images into Mosaic</h2>
+        <div class="content has-text-justified">
+          <p>
+            For a pair of images, I first compute the homography matrix between them and then warp one image to the other. To blend the two images, I use the 2-band “Laplacian Stack” blending method. Specifically, I extract the low and high frequency components of the two images using a Gaussian filter. I then creates a continuous mask that is based on the exact euclidean distance transform (i.e. the distances of a point from the nearest edge pixel) of the binary masks. This process produces two continuous masks. Then, I normalize across masks such that the sum of the two masks at each pixel is 1 (or 0 if both masks are 0 at the pixel). I blend the low frequency components using the normalized masks and blend the high frequency components by choosing the high frequency component of the image with the higher mask value at each pixel. Below are the blended mosaics of the three pairs of images I took. The (unnormalized) continuous masks for the last pair (Lounge View) is also shown below. 
+          </p>
+          <figure>
+            <img src="static/images/parta/balcony_mosaic.png"/>
+            <figcaption>Mosaic for Balcony View</figcaption>
+            <img src="static/images/parta/shattuck_mosaic.png"/>
+            <figcaption>Mosaic for Shattuck View</figcaption>
+            <img src="static/images/parta/lounge_mosaic.png"/>
+            <figcaption>Mosaic for Lounge View</figcaption>
+            <img src="static/images/parta/lounge_masks.png"/>
+            <figcaption>Unnormalized Continuous Masks for Lounge View, Obtained from Exact Euclidean Distance Transform</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+ 
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+  </html>
