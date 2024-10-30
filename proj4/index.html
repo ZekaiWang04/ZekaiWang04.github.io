@@ -68,6 +68,8 @@
         <div class="content has-text-justified">
           <p>
             In Part A of the project, I implemented image warping and mosaicing using perspective transformation (aka homography). Specifically, by spacifying image coordinate correspondences between two images, I can compute the 8 dof homography matrix between them, and use inverse warping and 2-band “Laplacian Stack” blending to produce an image mosaic. 
+
+            For Part B, I followed the paper <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj4/Papers/MOPS.pdf">Multi-Image Matching using Multi-Scale Oriented Patches” by Brown et al.</a> (with some simplification) and use automatic feature matching & RANSAC to compute the homography matrix between two images.
           </p>
         </div>
       </div>
@@ -131,7 +133,7 @@
         <h2 class="title is-3">Image Rectification</h2>
         <div class="content has-text-justified">
           <p>
-            With these, we are ready to rectify distorted squares/rectangles due to the angle I took the images. Below are two examples of rectification, one for rectifying the book cover for Foundations of Computer Vision, and another for rectifying the US Letter sized paper taped on the entrance of BAIR ... or should I say Berkeley Physics and Chemistry Lab. Note that the rectification is not perfect, and some parts of the rectified images are distorted. 
+            With these, we are ready to rectify distorted squares/rectangles due to the angle I took the images. Below are two examples of rectification, one for rectifying the book cover for Foundations of Computer Vision, and another for rectifying the US Letter sized paper taped on the entrance of BAIR ... or should I say Berkeley Physics and Chemistry Lab. 
           </p>
           <figure>
             <img src="static/images/parta/book_rectification.png"/>
@@ -170,6 +172,154 @@
   </div>
 </section>
 
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Harris Corner Detector</h2>
+        <div class="content has-text-justified">
+          <p>
+            Harris corner detector uses the second moment matrix (the outer product of smoothed derivatives from convolving the image with a DoG filter) to find corners in the image. Specifically, we use the determinant of the second moment matrix divided by the trace of the matrix as a measure of cornerness. We threshold the measure with threshold \(10\) and discard corners within \(20\) pixels to the image boundaries. Below the leftmost plots are the harris corners overlaid on the original images. We see there are too many corners (on the magnitude of 10k).
+          </p>
+          <figure>
+            <img src="static/images/partb/balcony_corners.png" style="width: 300%;"/>
+            <figcaption>Corners for Balcony View. Left: Harris Corners, Middle: Maximum Thresholding to 500 corners, Right: Adaptive Non-Maximal Suppression to 500 corners</figcaption>
+            <img src="static/images/partb/shattuck_corners.png" style="width: 300%;"/>
+            <figcaption>Corners for Shattuck View. Left: Harris Corners, Middle: Maximum Thresholding to 500 corners, Right: Adaptive Non-Maximal Suppression to 500 corners</figcaption>
+            <img src="static/images/partb/lounge_corners.png" style="width: 300%;"/>
+            <figcaption>Corners for Lounge View. Left: Harris Corners, Middle: Maximum Thresholding to 500 corners, Right: Adaptive Non-Maximal Suppression to 500 corners</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Adaptive Non-Maximal Suppression</h2>
+        <div class="content has-text-justified">
+          <p>
+            From the middle plots above, we can see that maximum thresholding on the Harris measure of cornerness does not give well-spread distributions of corners: the 500 corners are packed together in clusters. To provide a more uniform distribution of corners, we implement a robust non-maximal Suppression, where for each corner \(i\) we assign \(r_i = \min(|x_i - x_j|), 0.9 \times f(x_j) > f(x_i) \). Here \(x_i\) is the coordinate of corner \(i\) and \(f(x_i)\) is the cornerness measure. We then choose the corners with the largest 500 \(r_i\) values. Intuitively, we are finding the local maxima of cornerness. The rightmost plots above show the results of this process. We see the corners are much more evenly distributed across the image.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Feature Descriptor extraction</h2>
+        <div class="content has-text-justified">
+          <p>
+            For each point of interest (corners filtered through Adaptive Non-Maximal Suppression), we simply extract the \(40 \times 40\) patch centered at each corner. Then, for each patch, we pass through a Gaussian filter (with cutoff frequency corresponding to the Nyquist frequency of the resampled image) and resizes it to \(8 \times 8\) and normalize it to have zero mean and unit variance. Below are some examples of the feature descriptors (unnormalized for visualization purposes).
+          </p>
+          <figure>
+            <img src="static/images/partb/balcony_features.png" style="width: 50%;"/>
+            <figcaption>9 Example Feature Descriptors from Balcony View</figcaption>
+            <img src="static/images/partb/shattuck_features.png" style="width: 50%;"/>
+            <figcaption>9 Example Feature Descriptors from Shattuck View</figcaption>
+            <img src="static/images/partb/lounge_features.png" style="width: 50%;"/>
+            <figcaption>9 Example Feature Descriptors from Lounge View</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Feature Matching</h2>
+        <div class="content has-text-justified">
+          <p>
+            After extracting the feature descriptors, we can match them using the nearest neighbor approach. For each feature descriptor in the first image, we find the 2-nearest neighbor descriptors in the second image using the Euclidean distance. We then calculate the ratio between the error of the first and second nearest neighbor and threshold it with a value of \(0.5\) to filter out poor matches. The figures below show the matches between the three pairs of images. We see that even with these filtering techniques, we still have one false match for the Shattuck view and one for the Lounge view. 
+          </p>
+          <figure>
+            <img src="static/images/partb/balcony_matches.png" style="width: 200%;"/>
+            <figcaption>59 Matches for Balcony View</figcaption>
+            <img src="static/images/partb/shattuck_matches.png" style="width: 200%;"/>
+            <figcaption>29 Matches for Shattuck View</figcaption>
+            <img src="static/images/partb/lounge_matches.png" style="width: 200%;"/>
+            <figcaption>115 Matches for Lounge View</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Robust Homography with RANSAC</h2>
+        <div class="content has-text-justified">
+          <p>
+            To compute a robust homography matrix, we can use 4-point RANSAC (RANdom SAmple Consensus). Specifically, we sample a lot of 4-point combinations from the matches and compute the exact homography for each combination. For each homography matrix, we can then count the number of inliers (matches that are consistent up to 10 pixels with the homography). Finally, we select the largest set of inliners and recompute the final homography matrix using only those inliers. Below are the final automatically generated mosaics using RANSAC. For both the Shattuck and Lounge views, RANSAC discards the mismatched points. 
+          </p>
+          <figure>
+            <img src="static/images/partb/balcony_mosaic_auto.png" style="width: 200%;"/>
+            <figcaption>Auto Mosaic for Balcony View</figcaption>
+            <img src="static/images/partb/shattuck_mosaic_auto.png" style="width: 200%;"/>
+            <figcaption>Auto Mosaic for Shattuck View</figcaption>
+            <img src="static/images/partb/lounge_mosaic_auto.png" style="width: 200%;"/>
+            <figcaption>Auto Mosaic for Lounge View</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Comparison between Manual and Auto Stitching</h2>
+        <div class="content has-text-justified">
+          <p>
+            We can see below that auto stitching produces results that are pretty similar to using manually annotated correspondences. 
+          </p>
+          <figure>
+            <img src="static/images/partb/balcony_comparison.png" style="width: 200%;"/>
+            <figcaption>Comparison between Mosaics for Balcony View. Left: Manual, Right: Auto</figcaption>
+            <img src="static/images/partb/shattuck_comparison.png" style="width: 200%;"/>
+            <figcaption>Comparison between Mosaics for Shattuck View. Left: Manual, Right: Auto</figcaption>
+            <img src="static/images/partb/lounge_comparison.png" style="width: 200%;"/>
+            <figcaption>Comparison between Mosaics for Lounge View. Left: Manual, Right: Auto</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">What have you learned?</h2>
+        <div class="content has-text-justified">
+          <p>
+            The pipeline (detecting and extracting features, matching them, and using RANSAC to filter outliers) we have implemented is widely used (e.g. in SLAM), and implementing it helped me understand how it works. I think this will better equip me for the final project, where I plan to do SLAM/3D reconstruction.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer class="footer">
   <div class="container">
