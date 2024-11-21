@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>CS 180 Project 4: Fun with Diffusion Models</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.event.move.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.twentytwenty.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty-master/css/twentytwenty.css" type="text/css" media="screen" />
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Fun with Diffusion Models</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="mailto:zekai.wang@berkeley.edu" target="_blank">Zekai Wang</a></span>
+                <span class="author-block">
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">UC Berkeley<br>CS 180 Fall 2024 Project 5</span>
+                  </div>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Project Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            In Part A of the project, I loaded the pretrained checkpoints of the DeepFloyd IF diffusion model and implemented unconditional 
+            & conditional sampling loops. Then, I implemented various methods to edit images with the diffusion model, including revisiting image synthesis and creating images that, when flipped, looks like something different. 
+
+            For Part B, I reimplemented diffusion models with a U-Net backbone and trained it on the MNIST toy dataset. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Setup</h2>
+        <div class="content has-text-justified">
+          <p>
+            After loading the 2 stages of the pretrained DeepFloyd IF diffusion model, I try the official implementation of sampling. I try 5, 20, and 100 sampling steps, and the more steps we sample, the better quality the generated images are. The images captures the object described in the prompts. The three sets of images are shown below, generated with the random seed 100. 
+          </p>
+          <figure>
+            <img src="static/images/parta/example_5steps.png"/>
+            <img src="static/images/parta/example_20steps.png"/>
+            <img src="static/images/parta/example_100steps.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">The Forward Process</h2>
+        <div class="content has-text-justified">
+          <p>
+            Given an annealing schedule of \(\bar{\alpha}_t\), the forward process at timestep \(t\) perturbs the original image \(x_0\) as \(x_t = \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon \) where \(\epsilon \sim \mathcal{N}(0, I)\). The original image we use is a photo of the Campanile and the forward process is shown below. The annealing schedule is also shown below.
+          </p> 
+          <figure>
+            <img src="static/images/parta/forward.png"/>
+            <img src="static/images/parta/a_schedule.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Classical Denoising</h2>
+        <div class="content has-text-justified">
+          <p>
+            As a naive baseline, I use the Gaussian filter with kernel width 5 and sigma 2 and low pass filter the image. The results of denoising the perturbed images in the previous part are shown below. We see that the Gaussian filter does not really remove the noise, especially for the high noise levels.
+          </p>
+          <figure>
+            <img src="static/images/parta/classical_denoising.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">One-Step Denoising</h2>
+        <div class="content has-text-justified">
+          <p>
+            As a slightly less naive baseline, we can use one-step denoising by leveraging the stage 1 model of the DeepFloyd IF diffusion model. Since the model is predicting noise, we can simply call the model once, and subtract the predicted noise from the perturbed image. The results of denoising the perturbed images in the previous part are shown below. We see that the one-step denoising does a much better job than the Gaussian filter, bug for the high noise levels the image is still blurry.
+          </p>
+          <figure>
+            <img src="static/images/parta/one_step_denoising.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Iterative Denoising</h2>
+        <div class="content has-text-justified">
+          <p>
+            Instead, we can use iterative denoising to produce a better quality image. Assume we have two timesteps \(t' < t\), from the perturbation process we know that \(x_{t'} = \frac{\sqrt{\bar{\alpha}_{t'}} \beta_t}{1 - \bar{\alpha}_t} x_0 + \frac{\sqrt{\alpha_t} (1 - \bar{\alpha}_{t'})}{1 - \bar{\alpha}_t} x_t + v_{\sigma}\), where \(\alpha_t = \frac{\bar{\alpha}_t}{\bar{\alpha}_{t'}}, \beta_t = 1 - \alpha_t\), and \(v_{\sigma}\) is the random noise. We want to go from more noisy image to less noisy image (i.e., from \(x_t\) to \(x_{t'}\)), but we don't know the noise \(v_{\sigma}\) and the ground truth \(x_0\). Fortunately, the DeepFloyd IF diffusion model can help us estimate the noise, so we can estimate \(\hat{x}_0\) by subtracting the predicted noise from \(x_t\). The model also gives an estimate for the variance, and we can use that to construct \(v_{\sigma}\). The process of iterative denoising an image perturbed at timestep 690 is shown below. 
+          </p>
+          <figure>
+            <img src="static/images/parta/denoising_process.png"/>
+          </figure>
+          <p>
+            Below, I compare the results of iterative denoising with the one-step denoising and low pass filter denoising. We see that iterative denoising produces the best results.
+          </p>
+          <figure>
+            <img src="static/images/parta/denoise_comparison.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Diffusion Model Sampling</h2>
+        <div class="content has-text-justified">
+          <p>
+            We have been motivating diffusion models with denoising. However, we can also sample completely new images by feeding in a gaussian white noise and run iterative denoising on the diffusion model. With a prompt "a high quality photo", we can generate the following images. We can see the althouth we are conditioning on the langauge input, the generated images are still not very good. We will fix this with Classifier-Free Guidance in the next part.
+          </p>
+          <figure>
+            <img src="static/images/parta/vanilla_gen.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Classifier-Free Guidance (CFG)</h2>
+        <div class="content has-text-justified">
+          <p>
+            Conditioning on a dummy language input (e.g., an empty string) and an actual language input (e.g., "a high quality photo" in this part and more meaningful prompts in the following parts), the diffusion model outputs an unconditional noise prediction \(\epsilon_u\) and a conditional noise prediction \(\epsilon_c\). We use \(\epsilon_u + \gamma \cdot (\epsilon_c - \epsilon_u)\) as our overall noise estimate. The trick for generating high quality images that is consistent with our prompt is to set \(\gamma > 1\). Here we set it to be 7. Five samples generated through CFG are shown below. We see that the generated images are much better than the unconditional sampling. 
+          </p>
+          <figure>
+            <img src="static/images/parta/cfg.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Image-to-image Translation</h2>
+        <div class="content has-text-justified">
+          <p>
+            We can think of the denoising process as projecting a noisy image onto the manifold of clean images. The SDEdit altorithm perturbs a given images a bit and use diffusion to project it back to the space of realistic images. Below are some examples. 
+          </p>
+          <figure>
+            <img src="static/images/parta/sdeedit.png"/>
+          </figure>
+          <p>
+            We can also use fictional images as inputs to SDEdit. However, the generated images are biased towards human, and after multiple tries I still cannot get a good image of a house. 
+          </p>
+          <figure>
+            <img src="static/images/parta/fictional_1.png"/>
+            <img src="static/images/parta/fictional_2.png"/>
+            <img src="static/images/parta/fictional_3.png"/>
+          </figure>
+          <p>
+            Alternatively, we can force parts of the generated image to be belong to a true image, and only inpaint a section specified through a mask. Three examples are shown below. The gray overtone is because we normalized the image before feeding it into the diffusion model. 
+          </p>
+          <figure>
+            <img src="static/images/parta/inpaint1.png"/>
+            <img src="static/images/parta/inpaint2.png"/>
+            <img src="static/images/parta/inpaint3.png"/>
+          </figure>
+          <p>
+            If we provide language prompts to guide the projection process, we can achieve text-conditional image-to-image translation. 
+          </p>
+          <figure>
+            <img src="static/images/parta/transfer1.png"/>
+            <figcaption>Prompt: "a rocket ship" </figcaption>
+            <img src="static/images/parta/transfer2.png"/>
+            <figcaption>Prompt: "an oil painting of people around a campfire" </figcaption>
+            <img src="static/images/parta/transfer3.png"/>
+            <figcaption>Prompt: "a man wearing a hat" </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Visual Anagrams</h2>
+        <div class="content has-text-justified">
+          <p>
+            By flipping the noise estimate from two language prompts and averaging them together, we can generate images that, when flipped, looks like something different. Below are three examples.
+          </p>
+          <figure>
+            <img src="static/images/parta/anagram1.png"/>
+            <img src="static/images/parta/anagram2.png"/>
+            <img src="static/images/parta/anagram3.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Hybrid Images</h2>
+        <div class="content has-text-justified">
+          <p>
+            Finally, by low pass filtering and high pass filtering the predicted noises for two language prompts and adding them together, we can generate hybrid images. Below are three examples.
+          </p>
+          <figure>
+            <img src="static/images/parta/hybrid1.png"/>
+            <figcaption>Hybrid image of a skull and a waterfall</figcaption>
+            <img src="static/images/parta/hybrid2.png"/>
+            <figcaption>Hybrid image of an old man and a snowy mountain village</figcaption>
+            <img src="static/images/parta/hybrid3.png"/>
+            <figcaption>Hybrid image of a man wearing a hat and the amalfi cost</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Training a Single-Step Denoising UNet</h2>
+        <div class="content has-text-justified">
+          <p>
+            In the following sections we train a denoising UNet on the MNIST dataset. Specifically, we perturb the image with \(z = x + \sigma \epsilon, \epsilon \sim \mathcal{N}(0, I)\). The perturbation process is shown below.
+          </p>
+          <figure>
+            <img src="static/images/partb/perturb.png"/>
+          </figure>
+          <p>
+            During training, we fix the noise level \(\sigma = 0.5\) and the model \(D_\theta\) is trained to directly predict the denoised image, i.e., minimizing the loss \(\mathbb{E}_{z, x}[\lVert D_\theta(z) - x \rVert^2]\). The UNet with 128 hidden dimensions is trained for 5 epochs with batch size 256 using the Adam optimizer with lr 0.0001, and the loss curve is shown below.
+          </p>
+          <figure>
+            <img src="static/images/partb/train1.png"/>
+          </figure>
+          <p>
+            At the end of the first epoch, the denoising effect on the test set is shown below.
+          </p>
+          <figure>
+            <img src="static/images/partb/denoise_epoch1.png"/>
+          </figure>
+          <p>
+            The denoising effect on the test set at the end of the fifth epoch is shown below. We see that the denoising effect is better than the model trained only on one epoch.
+          </p>
+          <figure>
+            <img src="static/images/partb/denoise_epoch5.png"/>
+          </figure>
+          <p>
+            One drawback of the training scheme is that, as a one-step method, we must know the noise level a priori. The denoising effect of the fully trained model on different levels of noises are shown below (it is considered out of distribution). Note that the model performs poorly on large noise levels. 
+          </p>
+          <figure>
+            <img src="static/images/partb/denoise_ood.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Adding Time Conditioning to UNet</h2>
+        <div class="content has-text-justified">
+          <p>
+            We can improve the diffusion model by conditioning on the timestep, e.g., the amount of noise. With the UNet conditioned on the timestep, the training objective becomes minimizing the loss \(\mathbb{E}_{z, x, t}[\lVert \epsilon_\theta(z, t) - \epsilon \rVert^2]\) with \(z = \sqrt{\bar{\alpha}_t} x + \sqrt{1 - \bar{\alpha}_t} \epsilon, \epsilon \sim \mathcal{N}(0, I)\). The UNet with 64 hidden dimensions is trained for 20 epochs with batch size 128 using the Adam optimizer with initial lr 0.001 and exponential lr decay (coefficient is 0.9), and the loss curve is shown below.
+          </p>
+          <figure>
+            <img src="static/images/partb/train2.png"/>
+          </figure>
+          <p>
+            Below are the samples generated by the UNet through iterative denoising at the end of the fifth and twentieth epochs. We see that the denoising effect is better at the end of the twentieth epoch. Since we are not conditioning on the classes, we cannot control the digit that we generate. 
+          </p>
+          <figure>
+            <img src="static/images/partb/timecond_epoch5.png"/>
+            <img src="static/images/partb/timecond_epoch20.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Adding Class-Conditioning to UNet</h2>
+        <div class="content has-text-justified">
+          <p>
+            Finally, since in MNIST we have 10 classes, we would like to control which digit we generate. We can do this by adding class conditioning to the UNet architecture. The training setup is identical to the previous part. The training loss curve is shown below.
+          </p>
+          <figure>
+            <img src="static/images/partb/train3.png"/>
+          </figure>
+          <p>
+            Below are the samples generated by the UNet through iterative denoising at the end of the fifth and twentieth epochs. We see that the denoising effect is better at the end of the twentieth epoch. Since we can condition on the class, we can control which digit to generate. The quality of the generated images are also better than the time-conditioned model.
+          </p>
+          <figure>
+            <img src="static/images/partb/classcond_epoch5.png"/>
+            <img src="static/images/partb/classcond_epoch20.png"/>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+ 
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+  </html>
