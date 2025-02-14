@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Zekai Wang's Temporary Portfolio</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.event.move.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.twentytwenty.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty-master/css/twentytwenty.css" type="text/css" media="screen" />
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Zekai Wang's Portfolio</h1>
+          </div>
+        </div>
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+              <p>
+                Hi! I'm Zekai, a 3rd year undergraduate at UC Berkeley majoring in Computer Science and Mathematics. You can reach me at <a href="mailto:zekai.wang@berkeley.edu">zekai.wang@berkeley.edu</a> or visit my 
+                <a href="https://github.com/ZekaiWang04" target="_blank">GitHub</a> profile.
+
+                Below are some of my recent projects.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Roboprompt (ICRA 2025)</h2>
+        <div class="content has-text-justified">
+          <p>
+            Historically, for a robot to learn a task, we need to collect task-specific data and train a model from scratch. With the advances in Large Language Model, Vision Language Model, and robotics foundation models, we can now efficiently finetune a foundation model to perform a task. However, the process of collecting data and finetuning is still required. In this work, we present Roboprompt, a framework that utilizes pretrained LLM directly to perform a task without any finetuning. We are inspired by recent works investigating LLM's in-context learning abilities and propose a method to generate in-context examples for a specific task. With these generated examples, we show a LLM can successfully perform the task without any finetuning. For more details, visit the <a href="https://davidyyd.github.io/roboprompt/" target="_blank">project website</a> and read the <a href="https://arxiv.org/abs/2410.12782" target="_blank">paper on arXiv</a>.
+          </p>
+          <figure>
+            <img src="static/images/teaser.png" style="width: 800px;">
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">CS 180 Computer Vision and Computational Photography Projects</h2>
+        <div class="content has-text-justified">
+          <p>
+            Below are some of the projects I worked on during the CS 180 course.
+          </p>
+            <div class="project">
+            <h3 class="title is-4">Project 1: Image Stitching</h3>
+            <p>
+                In this project, we examined different similarity scores to align the RGB channels of an image. We also used edges as features to help align the images. For more details, visit the <a href="../proj1/index.html" target="_blank">project website</a>.
+            </p>
+            <figure>
+              <img src="static/images/proj1.jpg" style="width: 400px;">
+            </figure>
+          </div>
+          <br><br>
+          <div class="project">
+            <h3 class="title is-4">Project 2: Filter and Frequencies</h3>
+            <p>
+              We implemented hybrid image blending (blend two images such that when looked upfront the hybrid image looks like one original image and when looked from a distance it looks like the other original image) and pyramid blending (for a smooth transition region). For more details, visit the <a href="../proj2/index.html" target="_blank">project website</a>.
+            <figure>
+              <img src="static/images/proj2.jpg" style="width: 400px;">
+            </figure>
+            </p>
+          </div>
+          <br><br>
+          <div class="project">
+            <h3 class="title is-4">Project 3: Face Morphing</h3>
+            <p>
+              Given the images of two faces and their corresponding keypoints (e.g. from a Neural Network), we morph the two faces together by generating a triangle mesh, calculate the mean shape of the keypoints, and morph the corresponding triangles together using linear algebra. For more details, visit the <a href="../proj3/index.html" target="_blank">project website</a>.
+            </p>
+            <figure>
+              <img src="static/images/proj3.gif"  style="width: 400px;">
+            </figure>
+          </div>
+          <br><br>
+          <div class="project">
+            <h3 class="title is-4">Project 4: Panorama Stitching</h3>
+            <p>
+              Given two images that shares a common projection center, we can use perspective transform to stitch the two images together. We implemented the full pipeline of corner detection, Adaptive Non-Maximal Suppression, corner feature descriptors, feature matching, and 4-point RANSAC. For more details, visit the <a href="../proj4/index.html" target="_blank">project website</a>.
+            </p>
+            <figure>
+              <img src="static/images/proj4.jpg" style="width: 400px;">
+            </figure>
+          </div>
+          <br><br>
+          <div class="project">
+            <h3 class="title is-4">Project 5: Diffusion Models</h3>
+            <p>
+              We played around with a trained diffusion model and implemented Classifier-Free Guidance for sampling, as well as its applications (e.g. SDEdit). In addition, we trained a simple diffusion model on MNIST to generate hand-written digits. For more details, visit the <a href="../proj5/index.html" target="_blank">project website</a>.
+            </p>
+            <figure>
+              <img src="static/images/proj5.gif" style="width: 400px;">
+            </figure>
+          </div>
+          <br><br>
+          <div class="project">
+            <h3 class="title is-4">Project 6: Neural Radiance Fields (NeRF)</h3>
+            <p>
+              We implemented Neural Radiance Fields, a method trained on different views of a scene and is capable of rendering from novel views. For more details, visit the <a href="../nerf_proj/index.html" target="_blank">project website</a>.
+            </p>
+            <figure>
+              <img src="static/images/nerf.jpg" style="width: 400px;">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></div>
+
+ 
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+  </html>
