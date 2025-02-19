@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>CS 184 HW1 Rasterizer</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.event.move.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.twentytwenty.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty-master/css/twentytwenty.css" type="text/css" media="screen" />
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Rasterizer</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="mailto:zekai.wang@berkeley.edu" target="_blank">Zekai Wang</a></span>
+                <span class="author-block">
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">UC Berkeley<br>CS 184 Spring 2025 HW 1</span>
+                  </div>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Project Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            I implement the rasterization pipeline that rasterizes a triangle with a fixed color, interpolates the color within triangle with barycentric coordinates, and texture mapping. For antialiasing, I implement supersampling, different pixel sampling approaches and level sampling approaches for texture mapping. I also filled in some transformation matrices for 2D homogeneous coordinates. I faced problem with edge conditions, and usually clipping pixels/texels to within its bounds solves the problem. My website link is <a href="https://zekaiwang.github.io/cs184/hw1/">https://zekaiwang.github.io/cs184/hw1/</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Task 1: Drawing Single-Color Triangles</h2>
+        <div class="content has-text-justified">
+          <p>
+            I first calculate the bounding rectangle of the triangle by finding \(\lfloor\min(x_1, x_2, x_3)\rfloor, \lceil\max(x_1, x_2, x_3)\rceil, \lfloor\min(y_1, y_2, y_3)\rfloor, \lceil\max(y_1, y_2, y_3)\rceil\). Then, I do a sanity check by clipping the vertices of the triangle with the bounds of the buffer. I then iterate through the pixel centers of the bounding rectangle and check if the pixel is inside the triangle. To do this, I use a slightly different approach than the one covered in lecture. We know a point is inside a triangle if and only if it is on the same side of all three edges as the corresponding vertices that are not part of the edge. For all three edges, I can calculate the line equation \(ax + by + c = 0\) using the two vertices of the edge. Then, I can check if the point is on the same side of the edge as the third vertex by checking the sign of \(ax + by + c\), plugging in the \(x, y\) coordinates of the point and the vertex not included in the edge. Below is <code>basic/test4.svg</code>. 
+          </p>
+          <figure>
+            <img src="static/images/task1_test4.png"/>
+            <figcaption><code>basic/test4.svg</code></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Task 2: Antialiasing by Supersampling</h2>
+        <div class="content has-text-justified">
+          <p>
+            I use the naive approach of resizing <code>RasterizerImp::sample_buffer</code> to represent the supersampling grid. I modified <code>RasterizerImp::set_sample_rate()</code>, <code>RasterizerImp::set_framebuffer_target()</code> to reflect the resized length of the buffer, and called <code>RasterizerImp::clear_buffers()</code> at <code>RasterizerImp::set_sample_rate()</code> to clear the buffer when a new sample rate is set. I then changed <code>RasterizerImp::rasterize_triangle()</code> and <code>RasterizerImp::fill_pixel()</code> to reflect the supersampling grid (for <code>RasterizerImp::rasterize_triangle()</code>, the only modification is to multiply the coordinates of the vertices by \(\sqrt{\textrm{sample_rate}}\)), and averaged the colors of the buffer at <code>RasterizerImp::resolve_to_framebuffer()</code> to produce the final buffer. Supersampling is useful because it reduces aliasing. Since we are sampling at a higher frequency, the Nyquist-Shannon sampling theorem tells us that we can capture more high frequency information in the image. Since when downsampling the supersampled grid we are using the classical technique of first smoothing (by a box filter) and then downsampling, the downsampling process will not introduce significant aliasing. For triangles specifically, since we can apply the within-triangle test at more grids, we can better approximate the coverage of the continuous triangle. Then when downsampled, we can reduce aliasing. Below is <code>basic/test4.svg</code> with 1x1, 2x2, and 4x4 supersampling. Since at skinny edges the within-triangle test will fail to capture the coverage of the triangle with a coarse sampling, supersampling improves the quality of the image.
+          </p> 
+          <figure>
+            <img src="static/images/task2_1.png"/>
+            <figcaption>1x1 No Supersampling</figcaption>
+            <img src="static/images/task2_4.png"/>
+            <figcaption>2x2 Supersampling</code></figcaption>
+            <img src="static/images/task2_16.png"/>
+            <figcaption>4x4 Supersampling</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Task 3: Transforms</h2>
+        <div class="content has-text-justified">
+          <figure>
+            <img src="static/images/task3_my_robot.png"/>
+            <figcaption>Waving Robot</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Task 4: Barycentric Coorcdinates</h2>
+        <div class="content has-text-justified">
+          <p>
+            Barycentric coordinate is a coordinate system based on a triangle (i.e. three points). If we let \(A, B, C\) be the three non-colinear 2D points that form the triangle, and let \(O\) be an (arbitrary) origin, then every point \(P\) can be represented by \(\overrightarrow{OP} = \alpha \overrightarrow{OA} + \beta \overrightarrow{OB} + \gamma \overrightarrow{OC}, \alpha + \beta + \gamma = 1\). In other words, barycentric coordinate is the coefficient of an affine combination of the three vertices of the triangle. THus, \(\alpha, \beta, \gamma\) gives us a way to represent any point in the plane. The Triangle interpolation image below shows the barycentric coordinate value of any point in the triangle, using the three color channels to store the barycentric coordinate values.
+          </p>
+          <figure>
+            <img src="static/images/task4_triangle.png"/>
+            <figcaption>Triangle</figcaption>
+            <img src="static/images/task4_circle.png"/>
+            <figcaption><code>basic/test7.svg</code></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Task 5: "Pixel Sampling" For Texture Mapping</h2>
+        <div class="content has-text-justified">
+          <p>
+            I use barycentric coordinate to find the uv coordinate of the target pixel we want to render by calculating its barycentric coordinate in xy plane and evaluate it in the uv plane. Then, I can map the nearest texel of the uv target coordinate (for nearest sampling) or a biliniear interpolation of the four adjacent texels (for bilinear sampling) to the color of the target point. Below is <code>texmap/test5.svg </code> with nearest and bilinear sampling, with 1x1 sampling and 4x4 supersampling. We can see that bilinear sampling gives a smoother image and nearest sampling gives a sharper image. When the supersampling rate is low and at edges of the triangles, bilinear sampling gives a very different result than nearest sampling (because the nearest texel jumps, yet bilinear sampling smoothen the transition).
+          </p>
+          <figure>
+            <img src="static/images/task5_nearest_1.png"/>
+            <figcaption>1x1 No Supersampling, Nearest</figcaption>
+            <img src="static/images/task5_bilinear_1.png"/>
+            <figcaption>1x1 No Supersampling, Bilinear</figcaption>
+            <img src="static/images/task5_nearest_16.png"/>
+            <figcaption>4x4 Supersampling, Nearest</figcaption>
+            <img src="static/images/task5_bilinear_16.png"/>
+            <figcaption>4x4 Supersampling, Bilinear</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Task 6: Level Sampling with Mipmaps for Texture Mapping</h2>
+        <div class="content has-text-justified">
+          <p>
+            To approximate the gradient of uv with respect to xy, I calculate the uv coordinates corresponding to \((x+1, y), (x, y+1)\) by evaulating the corresponding barycentric coordinates (calculated in xy space) in uv space. Then, I use euler's formula to approximate the gradient of uv with respect to xy, after which I multiply the u gradients with the height of the level 0 texture image and the v gradients with its width. With the adjusted gradients, I can approximate the "size" of the footprint by calculating \(\max(\sqrt{(\frac{\partial u}{\partial x})^2 + (\frac{\partial v}{\partial x})^2}, \sqrt{(\frac{\partial u}{\partial y})^2 + (\frac{\partial v}{\partial y})^2} )\) and its \(log2\) value. Similar to texel sampling stragety, I can sample the level 0 (finest) mipmap, the mipmap closest to the log size of the footprint, or use a linear interpolation of the two nearest mipmaps. 
+
+            Comparing methods for pixel sampling, level sampling, and supersampling, we see that using bilinear rather than nearest pixel/level sampling is about 2x slower each but does not cost much memory overhead. In contrast, supersampling both increases the memory cost and reduces computation speed by the sample rate. They all improves the quality of the rendered image. 
+
+            Below is <code>texmap/test5.svg</code> without supersampling and with my own texture png file. My texture png is high resolution and contains a lot of details. We can see that naively using the level 0 mipmap gives a very jagged image, while using the nearest level gives a much smoother image. Bilinear sampling for pixel also gives a smoother image than nearest sampling.
+          </p>
+          <figure>
+            <img src="static/images/task6_lzero_pnearest.png"/>
+            <figcaption>Level 0, Nearest</figcaption>
+            <img src="static/images/task6_lzero_pbilinear.png"/>
+            <figcaption>Level 0, Bilinear</figcaption>
+            <img src="static/images/task6_lnearest_pnearest.png"/>
+            <figcaption>Nearest Level, Nearest</figcaption>
+            <img src="static/images/task6_lnearest_pbilinear.png"/>
+            <figcaption>Nearest Level, Bilinear</figcaption>
+            <img src="static/images/planes.png"/>
+            <figcaption>My Texture</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+  </html>
