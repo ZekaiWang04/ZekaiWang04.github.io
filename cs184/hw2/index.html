@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>CS 184 Mesh and Geometry </title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.event.move.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.twentytwenty.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty-master/css/twentytwenty.css" type="text/css" media="screen" />
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Mesh and Geometry</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="mailto:zekai.wang@berkeley.edu" target="_blank">Zekai Wang</a></span>
+                <span class="author-block">
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">UC Berkeley<br>CS 184 Spring 2025 HW 2</span>
+                  </div>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Project Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            TODO My website link is <a href="https://ZekaiWang04.github.io/cs184/hw2/">https://ZekaiWang04.github.io/cs184/hw2/</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h2>
+        <div class="content has-text-justified">
+          <p>
+            Bezier curves can be defined as iteratively applying linear interpolation to a set of control points, and treating the resulting points as the next level control points, which in turn can be applied linear interpolation once again till we reach a level consisting of a single point (this is the de Casteljau algorithm). The bezier curve is the set of all such points given different t parameters in the linear interpolation operation. The function I implement is <code>BezierCurve::evaluateStep()</code>, which takes a vector of 2D control points, sequentially applying linear interpolation to neighbors, and returning the resulting vector of 2D points that form the next level of control points. Iteratively calling this function would give us a point on the Bezier curve with respect to t. Below are the visualizations with a 6-control point Bezier curve, and a slightly different 6-control point Bezier curve.
+          </p>
+          <figure>
+            <img src="static/images/s1p1_00.png"/>
+            <figcaption>Bezier Curve, Level 0</figcaption>
+            <img src="static/images/s1p1_01.png"/>
+            <figcaption>Bezier Curve, Level 1</figcaption>
+            <img src="static/images/s1p1_02.png"/>
+            <figcaption>Bezier Curve, Level 2</figcaption>
+            <img src="static/images/s1p1_03.png"/>
+            <figcaption>Bezier Curve, Level 3</figcaption>
+            <img src="static/images/s1p1_04.png"/>
+            <figcaption>Bezier Curve, Level 4</figcaption>
+            <img src="static/images/s1p1_05.png"/>
+            <figcaption>Bezier Curve, Level 5</figcaption>
+            <img src="static/images/s1p1_15.png"/>
+            <figcaption>A Slightly Different Bezier Curve, Level 5</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h2>
+        <div class="content has-text-justified">
+          <p>
+            We can extend the 1D de Casteljau algorithm to 2D by first applying the 1D version to each row (forming a new row control point for each row) with lerp parameter u, and then applying the 1D version to the newly formed row control points with lerp paremeter v. Through this process we can evaluate the Bezier surface at a given (u, v) parameter. In my implementation, <code>BezierPatch::evaluateStep()</code> evaluates one step of the 1D de Casteljau algorithm, <code>BezierPatch::evaluate1D</code> is the 1D de Casteljau algorithm (which recursively calls <code>BezierPatch::evaluateStep()</code>), and <code>BezierPatch::evaluate</code> is the 2D de Casteljau algorithm (which calls <code>BezierPatch::evaluate1D</code> on the newly formed row control points). Below is a visualization of the teapot. 
+          </p> 
+          <figure>
+            <img src="static/images/s1p2.png"/>
+            <figcaption><code>bez/teapot.bez</code></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 3: Area-Weighted Vertex Normals</h2>
+        <div class="content has-text-justified">
+          <p>
+            To implement area-weighted vertex normals, I first traverse all the faces (that are not part of the boundary) at the given vertex, and then I obtain the position of the three vertices attached to the triangle face (I also explicitly assert that all non-boundary faces are triangles). Then I can use cross product (since the orientation is obtained by right-hand rule and the vlaue of the corss product of two edges gives two times the area of the triangle) to calcualte the normal of the triangle face whose length is the area of the triangle. I add these area-weighted normals together and return its unit direction. Below are the comparison of the teapot shading with and without vertex normals.
+          </p> 
+          <figure>
+            <img src="static/images/s2p3_flat.png"/>
+            <figcaption>Flat Shading</figcaption>
+            <img src="static/images/s2p3_phong.png"/>
+            <figcaption>Phong Shading</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 4: Edge Flip</h2>
+        <div class="content has-text-justified">
+          <p>
+            To implement edge flip, I first retrieved all the halfedges, edges, faces, and vertices in tha ABCD rhombus (assuming we want to flip BC to AD). Then, I carefully reassigned the internal pointers of the halfedges, and then adjust the faces' and vertices' internal pointers accordingly. I do not have to change the edges' internal pointers since they are shared before and after the flip. Printing statements and assert statements were useful for debugging. Below are the screenshots of the teapot before and after some edge flips. Note because some flips make the mesh concave, so it is shaded. (N/A for debugging journey).
+          </p> 
+          <figure>
+            <img src="static/images/s2p4_before.png"/>
+            <figcaption>Before Edge Flips</figcaption>
+            <img src="static/images/s2p4_after.png"/>
+            <figcaption>After Edge Flips</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 5: Edge Split</h2>
+        <div class="content has-text-justified">
+          <p>
+            To implement edge split, similarly I first retrieved all the halfedges, edges, faces, and vertices in the ABCD rhombus (assuming we want to split BC). Then, I created the new M (midpoint) vertex, the six new halfedges (AM/MA/CM/MC/DM/MD, BM/MB are reassigned from BC/CB), the three new edges (AM/CM/DM, BM is reassigned from BC), and the two new faces (AMC/BMD, the other two are reassigned). Below are the screenshots of the teapot before and after some edge splits (and some combination of edge flips and splits). (N/A for debugging journey or extra credit).
+          </p> 
+          <figure>
+            <img src="static/images/s2p5_split_before.png"/>
+            <figcaption>Before Edge Splits</figcaption>
+            <img src="static/images/s2p5_split.png"/>
+            <figcaption>After Edge Splits</figcaption>
+            <img src="static/images/s2p5_fs_before.png"/>
+            <figcaption>Before Edge Flips and Splits</figcaption>
+            <img src="static/images/s2p5_fs.png"/>
+            <figcaption>After Edge Flips and Splits</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 6: Loop Subdivision for Mesh Upsampling</h2>
+        <div class="content has-text-justified">
+          <p>
+            I implemented loop subdivision through the following 5 steps: looping through existing vertices and caching their new positions, looping through existing edges and caching the new positions of their midpoints, looping through existing edges (here I use a hashset to store existing edges to avoid infinite loops...I can't any other method working) and split, looping through all edges and flipping newly created edges that connects an old vertex and a new one, and finally updating the position of the vertices. 
+
+            Sharp corners and edges become smoothed out as subdivision progresses. However if I pre-split some boundary edges, I can somehow preserve some sharp structure near boundaries. See the comparison between cube with and without pre splitting below.
+          </p> 
+          <figure>
+            <img src="static/images/s2p6_cubepresplit0.png"/>
+            <figcaption>Cube Pre Splitting Upsample Level 0</figcaption>
+            <img src="static/images/s2p6_cubepresplit1.png"/>
+            <figcaption>Cube Pre Splitting Upsample Level 1</figcaption>
+          </figure>
+          <p>
+            Right now without pre splitting, the cube becomes too smooth and loses its shape. Also it is asymmetric after the first upsampling. This is because right now the edges on each face is not rotationally symmetric (since there is a single edge that crosses each face). If we don't start with a symmetric mesh (in terms of vertices, edges, and consequently faces), upsampling will make the mesh asymmetric. See below for 0-4 levels of upsampling.
+          </p>
+          <figure>
+            <img src="static/images/s2p6_cube0.png"/>
+            <figcaption>Cube Upsample Level 0</figcaption>
+            <img src="static/images/s2p6_cube1.png"/>
+            <figcaption>Cube Upsample Level 1</figcaption>
+            <img src="static/images/s2p6_cube2.png"/>
+            <figcaption>Cube Upsample Level 2</figcaption>
+            <img src="static/images/s2p6_cube3.png"/>
+            <figcaption>Cube Upsample Level 3</figcaption>
+            <img src="static/images/s2p6_cube4.png"/>
+            <figcaption>Cube Upsample Level 4</figcaption>
+          </figure>
+          <p>
+            To make the cube symmetric, I can pre split the edges to be symmetric (i.e. each surface is a "X") in terms of vertices, edges, and also faces. See blow for visualizations.
+          </p>
+          <figure>
+            <img src="static/images/s2p6_cubesym0.png"/>
+            <figcaption>Symmetric Cube Upsample Level 0</figcaption>
+            <img src="static/images/s2p6_cubesym1.png"/>
+            <figcaption>Symmetric Cube Upsample Level 1</figcaption>
+            <img src="static/images/s2p6_cubesym2.png"/>
+            <figcaption>Symmetric Cube Upsample Level 2</figcaption>
+            <img src="static/images/s2p6_cubesym3.png"/>
+            <figcaption>Symmetric Cube Upsample Level 3</figcaption>
+            <img src="static/images/s2p6_cubesym4.png"/>
+            <figcaption>Symmetric Cube Upsample Level 4</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+  </html>
