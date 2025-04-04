@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>CS 184 Clothsim </title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.event.move.js" type="text/javascript"></script>
+  <script src="twentytwenty-master/js/jquery.twentytwenty.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty-master/css/twentytwenty.css" type="text/css" media="screen" />
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Clothsim</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="mailto:zekai.wang@berkeley.edu" target="_blank">Zekai Wang</a></span>
+                <span class="author-block">
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">UC Berkeley<br>CS 184 Spring 2025 HW 4</span>
+                  </div>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Project Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            In this homework we implemented various physical simulation utilities as well as a few GPU-accelerated shaders. In Part 1 we initialize the point masses and springs that models a cloth. In Part 2 we implemented the physical step with numerical integration and by considering all the external and internal forces. In Part 3 we implemented collision handling with plane and sphere. In Part 4 we implemented self collision constraint. Finally in Part 5 we implemented GPU-accelerated vertex and fragment shaders of various functionalities. My website link is <a href="https://ZekaiWang04.github.io/cs184/hw4/">https://ZekaiWang04.github.io/cs184/hw4/</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 1: Masses and Springs</h2>
+        <div class="content has-text-justified">
+          <p>
+            To initialize a cloth, we first position the point masses according to the prespecified grid, and then we connect each point mass with its left and upper neighbor with structural spring constraints, each point mass with its upper-left and upper-right neighbor with shear spring constraints, and each point mass with its left and right neighbor two grids away with bending spring constraints. Below are the visualizations of the initialized scene for <code>pinned2.json</code>. Without any shearing constraints, the grid will only consists of springs in the x and y directions (no diagonal springs). With only shearing constraints, on the other hand, the grid will only consists of diagonal springs. With all constraints, the grid will consists of both diagonal and vertical/horizontal springs.
+          </p>
+          <figure>
+            <img src="static/images/part1_noshearing.png"/>
+            <figcaption>No Shearing Constraints</figcaption>
+            <img src="static/images/part1_onlyshearing.png"/>
+            <figcaption>Only Shearing Constraints</figcaption>
+            <img src="static/images/part1_all.png"/>
+            <figcaption>All Constraints</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 2: Simulation via numerical integration</h2>
+        <div class="content has-text-justified">
+          <p>
+            For each simulation step, we apply the sum external forces to each point mass and then consider the springs in the system. Given the forces at each point mass, We can use Verlet integration to numerically calculate the position of the point mass at the next timestep. Qualitatively, as the spring coefficient ks increases, the cloth becomes more rigid and the movement/oscillation of the cloth becomes less significant. With a very low ks the cloth is very soft and floppy, while with a very high ks the cloth is very stiff and rigid. Below are the visualizations of the cloth simulation with different ks values. As density increases, the vertical offset from the height where the two pinned points remain and the rest of the cloth increases, and the amount of wrinkles in the cloth increases. As the damping coefficient increases, the speed of the motion of the cloth decreases, and the oscillation/wrinkles of the cloth becomes less significant. See below for visualizations.
+          </p>
+          <figure>
+            <img src="static/images/part2_default.png"/>
+            <figcaption>Default</figcaption>
+            <img src="static/images/part2_default_shaded.png"/>
+            <figcaption>Default Shaded</figcaption>
+            <img src="static/images/part2_highks.png"/>
+            <figcaption>High Spring Coefficient</figcaption>
+            <img src="static/images/part2_highks_shaded.png"/>
+            <figcaption>High Spring Coefficient Shaded</figcaption>
+            <img src="static/images/part2_highdensity.png"/>
+            <figcaption>High Density</figcaption>
+            <img src="static/images/part2_highdensity_shaded.png"/>
+            <figcaption>High Density Shaded</figcaption>
+            <img src="static/images/part2_highdamping.png"/>
+            <figcaption>High Damping Coefficient</figcaption>
+            <img src="static/images/part2_highdamping_shaded.png"/>
+            <figcaption>High Damping Coefficient Shaded</figcaption>
+          </figure>
+          <p>
+            Below are the screenshot of the shaded <code>pinned4.json</code> scene at the final resting position (with the default parameters).
+          </p>
+          <figure>
+            <img src="static/images/part2_4.png"/>
+            <figcaption>Final Resting Position</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 3: Handling collisions with other objects</h2>
+        <div class="content has-text-justified">
+          <p>
+            For collision with sphere, we first check if the distance between the point mass' position and the center of the sphere is less than the radius of the sphere. If so, using the unit vector describing the direction from the center to the point mass' position, we can calculate the tangent point on the sphere. Then we subtract its coordinate with the point mass' last position to get the adjustment offset, multiply it with (1-friction), and add it to the adjustment offset to handle collision. For collision with plane, we first check if the dot product between the point mass' position subtracts a point on the plane and the normal vector of the plane has a different sign with the dot product between the point mass' last position subtracts a point on the plane and the normal vector. If so, the point mass passes the plane before and after, and we can project the point mass' position to the plane using dot product. The projected point on the plane is the tangent point, and we need to add a delta distance to the point on the plane in the same side as the point mass' last position. Finally, the adjustment vector is the new tangent point minus the last position of the point mass, and we can multiply it with (1-friction) and then add it to last positions to get the new position of the point mass.
+          </p>
+          <p>
+            For the sphere collision scene, below are the shaded final states of the scene with different ks values. Qualitatively, as ks increases, the cloth becomes more rigid and the final state is more flat with sparser wrinkles that span larger regions. 
+          </p>
+          <figure>
+            <img src="static/images/part3_sphere_ks500.png"/>
+            <figcaption>Sphere Scene, ks = 500</figcaption>
+            <img src="static/images/part3_sphere_ks5000.png"/>
+            <figcaption>Sphere Scene, ks = 5000</figcaption>
+            <img src="static/images/part3_sphere_ks50000.png"/>
+            <figcaption>Sphere Scene, ks = 50000</figcaption>
+          </figure>
+          <p>
+            For the plane collision scene, below is the visualization of the final state, with a custom color.
+          </p>
+          <figure>
+            <img src="static/images/part3_plane.png"/>
+            <figcaption>Plane Scene</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 4: Handling self-collisions</h2>
+        <div class="content has-text-justified">
+          <p>
+            To handle self collision, we first define a spatial hash that maps any position to a float by assiging the position to a 3D voxel of pre-specified size and then use the voxel indices to construct a hash value. We put every point mass to a hash map using the spatial has, and for each point mass we check point masses in the same or adjacent voxels for potential collisions, and for each potential self collision point mass we check if their distance is below a threshold. If so, we accumulate an adjustment vector that accounts for the collision between the two, and finally we apply the average adjustment vector divided by the number of simulation steps to the point mass' position. See the three screenshots below for different stages of the self collision process.
+          </p>
+          <figure>
+            <img src="static/images/part4_early.png"/>
+            <figcaption>Early Stage</figcaption>
+            <img src="static/images/part4_middle.png"/>
+            <figcaption>Middle Stage</figcaption>
+            <img src="static/images/part4_late.png"/>
+            <figcaption>Late Stage</figcaption>
+          </figure>
+          <p>
+            If we increase ks, we observe that in all stages the cloth is more rigid, the wrinkles are less significant, and the cloth is more flat.
+          </p>
+          <figure>
+            <img src="static/images/part4_early_highks.png"/>
+            <figcaption>Early Stage, high ks</figcaption>
+            <img src="static/images/part4_middle_highks.png"/>
+            <figcaption>Middle Stage, high ks</figcaption>
+            <img src="static/images/part4_late_highks.png"/>
+            <figcaption>Late Stage, high ks</figcaption>
+        </div>
+        <p>
+          If we increase the density, since gravity force would be larger whereas spring forces are constant, the cloth is pulled down more and the wrinkles are also less significant.
+        </p>
+        <figure>
+          <img src="static/images/part4_early_highdensity.png"/>
+          <figcaption>Early Stage, high density</figcaption>
+          <img src="static/images/part4_middle_highdensity.png"/>
+          <figcaption>Middle Stage, high density</figcaption>
+          <img src="static/images/part4_late_highdensity.png"/>
+          <figcaption>Late Stage, high density</figcaption>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Part 5: Cloth Sim</h2>
+        <div class="content has-text-justified">
+          <p>
+            A shader is a dedicated program that runs parallelly on the GPU and is responsible for processing some specific parts of the rendering pipeline. The vertex shader runs once per vertex, which processes the position, normal vector, tangent vector, and the uv coordinate of the vertex (i.e. material effects). After the vertex shader finishes, the result will be fed into the fragment shader, which runs once per pixel and is responsible for calculating the rendered color of that pixel. The vertex values are interpolated through barycentric coordinates across the polygons that the vertices form, and the framgent shader takes in these values and performs shading calculations to render the final color at that pixel (i.e. lighting effects). Once we have that, we send the color to the framebuffer. After processing all the primitives, the frame buffer contains the final rendered scene.
+          </p>
+          <p>
+            The Blinn-Phong shading model is a heuristic lighting model that adds up three components: the constant ambient light, the diffuse light that roughly models the light diffused from the surface, and the specular light that roughly models the light specularly reflected from the surface (color for the specular highlight is set to white). We can incorporate the Blinn-Phong model in the fragment shader. See the screenshots below for the Blinn-Phong shading model with only the ambient light, only the diffuse light, only the specular light, and all three components.
+          </p>
+          <figure>
+            <img src="static/images/part5_phong_ambient.png"/>
+            <figcaption>Ambient Light Only</figcaption>
+            <img src="static/images/part5_phong_diffuse.png"/>
+            <figcaption>Diffuse Light Only</figcaption>
+            <img src="static/images/part5_phong_specular.png"/>
+            <figcaption>Specular Light Only</figcaption>
+            <img src="static/images/part5_phong.png"/>
+            <figcaption>All Components</figcaption>
+          </figure>
+          <p>
+            For the fragment shader, we can also specify a texture mapping. See the screenshot below for the scene with a custom texture (a photo of the Museum of Flight).
+          </p>
+          <figure>
+            <img src="static/images/part5_texture.png"/>
+            <figcaption>Texture Mapping</figcaption>
+          </figure>
+          <p>
+            We can also introduce bumps or displacements into the surfaces using a height map. For bumps we alter the surface normal vectors that will create visual bumps on the surface of polygons, yet the positions of the point where light reflects are not changed. For displacements, we alter both the position and the surface normals so the point where light reflects is also changed. See the screenshots below for the sphere and the cloth with bumps and displacements.
+          </p>
+          <figure>
+            <img src="static/images/part5_bump_sphere.png"/>
+            <figcaption>Sphere with Bumps</figcaption>
+            <img src="static/images/part5_displacement_sphere.png"/>
+            <figcaption>Sphere with Displacements</figcaption>
+            <img src="static/images/part5_bump_cloth.png"/>
+            <figcaption>Cloth with Bumps</figcaption>
+            <img src="static/images/part5_displacement_cloth.png"/>
+            <figcaption>Cloth with Displacements</figcaption>
+          </figure>
+          <p>
+            We can observe the effect of changing the sphere's coarseness. See the screenshots below for <code>-o 16 -a 16</code> and <code>-o 128 -a 128</code>. As the mesh resolution increases, for the displacement shader the rendered sphere becomes more smooth, is more round, and the fine-grained details are of better quality. For the bump shader, the details also become a bit more fine-grained.
+          </p>
+          <figure>
+            <img src="static/images/part5_bump_sphere_16.png"/>
+            <figcaption>Sphere with Bumps, coarse</figcaption>
+            <img src="static/images/part5_bump_sphere_128.png"/>
+            <figcaption>Sphere with Bumps, fine</figcaption>
+            <img src="static/images/part5_displacement_sphere_16.png"/>
+            <figcaption>Sphere with Displacements, coarse</figcaption>
+            <img src="static/images/part5_displacement_sphere_128.png"/>
+            <figcaption>Sphere with Displacements, fine</figcaption>
+            <img src="static/images/part5_bump_cloth_16.png"/>
+            <figcaption>Cloth with Bump, coarse</figcaption>
+            <img src="static/images/part5_bump_cloth_128.png"/>
+            <figcaption>Cloth with Bump, fine</figcaption>
+            <img src="static/images/part5_displacement_cloth_16.png"/>
+            <figcaption>Cloth with Displacement, coarse</figcaption>
+            <img src="static/images/part5_displacement_cloth_128.png"/>
+            <figcaption>Cloth with Displacement, fine</figcaption>
+          </figure>
+          <p>
+            Finally, we can also inplement fully specular mirror reflection. See the screenshot below for the sphere and cloth with mirror reflection.
+          </p>
+          <figure>
+            <img src="static/images/part5_mirror_sphere.png"/>
+            <figcaption>Sphere with Mirror Reflection</figcaption>
+            <img src="static/images/part5_mirror_cloth.png"/>
+            <figcaption>Cloth with Mirror Reflection</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  </body>
+  </html>
