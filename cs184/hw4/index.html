@@ -229,6 +229,9 @@
             A shader is a dedicated program that runs parallelly on the GPU and is responsible for processing some specific parts of the rendering pipeline. The vertex shader runs once per vertex, which processes the position, normal vector, tangent vector, and the uv coordinate of the vertex (i.e. material effects). After the vertex shader finishes, the result will be fed into the fragment shader, which runs once per pixel and is responsible for calculating the rendered color of that pixel. The vertex values are interpolated through barycentric coordinates across the polygons that the vertices form, and the framgent shader takes in these values and performs shading calculations to render the final color at that pixel (i.e. lighting effects). Once we have that, we send the color to the framebuffer. After processing all the primitives, the frame buffer contains the final rendered scene.
           </p>
           <p>
+            As a disclaimer, I use copilot to generate and check my code for this part because I am unfamiliar with the new language and its programming paradigms. Even though I use AI, I still understand the concepts for rendering and shading. 
+          </p>
+          <p>
             The Blinn-Phong shading model is a heuristic lighting model that adds up three components: the constant ambient light, the diffuse light that roughly models the light diffused from the surface, and the specular light that roughly models the light specularly reflected from the surface (color for the specular highlight is set to white). We can incorporate the Blinn-Phong model in the fragment shader. See the screenshots below for the Blinn-Phong shading model with only the ambient light, only the diffuse light, only the specular light, and all three components.
           </p>
           <figure>
