@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c6d941eaa9038274b2bdfc846992b5cc {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_c6d941eaa9038274b2bdfc846992b5cc" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_c6d941eaa9038274b2bdfc846992b5cc = L.map(
+                "map_c6d941eaa9038274b2bdfc846992b5cc",
+                {
+                    center: [40.7128, -74.006],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_40385216c6f64bb7cab9a6dcdbf24f5c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_40385216c6f64bb7cab9a6dcdbf24f5c.addTo(map_c6d941eaa9038274b2bdfc846992b5cc);
+        
+    
+            var marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9 = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_a645c2852f2612e1d9b2c1c4d50dd2ed = L.circleMarker(
+                [40.7701, -73.9912],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_cec7409886c12c1e041da6bd76f759df = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ebd991d5b4522b2ce18b3b26d32a54c4 = $(`<div id="html_ebd991d5b4522b2ce18b3b26d32a54c4" style="width: 100.0%; height: 100.0%;">AT&T New York</div>`)[0];
+                popup_cec7409886c12c1e041da6bd76f759df.setContent(html_ebd991d5b4522b2ce18b3b26d32a54c4);
+            
+        
+
+        circle_marker_a645c2852f2612e1d9b2c1c4d50dd2ed.bindPopup(popup_cec7409886c12c1e041da6bd76f759df)
+        ;
+
+        
+    
+    
+            circle_marker_a645c2852f2612e1d9b2c1c4d50dd2ed.bindTooltip(
+                `<div>
+                     AT&T New York
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_273950c056b6f3efd7839f5e4b9093d6 = L.circleMarker(
+                [40.7506, -74.0064],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_4d68f2cb8e179c679b94ab77297ab748 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cc13dea956638b382aa0506d4f9ea1aa = $(`<div id="html_cc13dea956638b382aa0506d4f9ea1aa" style="width: 100.0%; height: 100.0%;">Windstream - Starrett-Lehigh</div>`)[0];
+                popup_4d68f2cb8e179c679b94ab77297ab748.setContent(html_cc13dea956638b382aa0506d4f9ea1aa);
+            
+        
+
+        circle_marker_273950c056b6f3efd7839f5e4b9093d6.bindPopup(popup_4d68f2cb8e179c679b94ab77297ab748)
+        ;
+
+        
+    
+    
+            circle_marker_273950c056b6f3efd7839f5e4b9093d6.bindTooltip(
+                `<div>
+                     Windstream - Starrett-Lehigh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e43c6d5a75987ea754d4ffdf8693b03c = L.circleMarker(
+                [40.7425, -74.006],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_aed7c59726ec848694118ece8e00f66a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f1181c95b13e93fef541628d9a38c558 = $(`<div id="html_f1181c95b13e93fef541628d9a38c558" style="width: 100.0%; height: 100.0%;">Telehouse Chelsea</div>`)[0];
+                popup_aed7c59726ec848694118ece8e00f66a.setContent(html_f1181c95b13e93fef541628d9a38c558);
+            
+        
+
+        circle_marker_e43c6d5a75987ea754d4ffdf8693b03c.bindPopup(popup_aed7c59726ec848694118ece8e00f66a)
+        ;
+
+        
+    
+    
+            circle_marker_e43c6d5a75987ea754d4ffdf8693b03c.bindTooltip(
+                `<div>
+                     Telehouse Chelsea
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f2a47dedb8d148e3a3fd376edaacd76c = L.circleMarker(
+                [40.741, -74.0027],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_659ae16722b284e08ebf12409cb2999d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4fa08137ac013ce231b2c1a88e728437 = $(`<div id="html_4fa08137ac013ce231b2c1a88e728437" style="width: 100.0%; height: 100.0%;">Google - 111 8th Ave</div>`)[0];
+                popup_659ae16722b284e08ebf12409cb2999d.setContent(html_4fa08137ac013ce231b2c1a88e728437);
+            
+        
+
+        circle_marker_f2a47dedb8d148e3a3fd376edaacd76c.bindPopup(popup_659ae16722b284e08ebf12409cb2999d)
+        ;
+
+        
+    
+    
+            circle_marker_f2a47dedb8d148e3a3fd376edaacd76c.bindTooltip(
+                `<div>
+                     Google - 111 8th Ave
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_591d47e15ea25d7e8a9fa2caf1b88272 = L.circleMarker(
+                [40.7291, -74.0072],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_2bfeb3098a3c600a9d489acd733256dd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a07d1c29d3bf4d24aa6c20f15c4df033 = $(`<div id="html_a07d1c29d3bf4d24aa6c20f15c4df033" style="width: 100.0%; height: 100.0%;">NaviSite</div>`)[0];
+                popup_2bfeb3098a3c600a9d489acd733256dd.setContent(html_a07d1c29d3bf4d24aa6c20f15c4df033);
+            
+        
+
+        circle_marker_591d47e15ea25d7e8a9fa2caf1b88272.bindPopup(popup_2bfeb3098a3c600a9d489acd733256dd)
+        ;
+
+        
+    
+    
+            circle_marker_591d47e15ea25d7e8a9fa2caf1b88272.bindTooltip(
+                `<div>
+                     NaviSite
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_494fa971432aa14d84e7775c58f16b87 = L.circleMarker(
+                [40.7255, -74.007],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_efc105c7f566945cda4cc8bf451f314d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8815424bd86e409e7191301d19679f13 = $(`<div id="html_8815424bd86e409e7191301d19679f13" style="width: 100.0%; height: 100.0%;">325 Hudson</div>`)[0];
+                popup_efc105c7f566945cda4cc8bf451f314d.setContent(html_8815424bd86e409e7191301d19679f13);
+            
+        
+
+        circle_marker_494fa971432aa14d84e7775c58f16b87.bindPopup(popup_efc105c7f566945cda4cc8bf451f314d)
+        ;
+
+        
+    
+    
+            circle_marker_494fa971432aa14d84e7775c58f16b87.bindTooltip(
+                `<div>
+                     325 Hudson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e91586d89bdc7a510c0a25f1a285eafe = L.circleMarker(
+                [40.7277, -74.0059],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_79e2e9987ae27fc791825d5d1847d9c9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_208a96bed9d235653f731539427a08ab = $(`<div id="html_208a96bed9d235653f731539427a08ab" style="width: 100.0%; height: 100.0%;">Lumen - 150 Varick</div>`)[0];
+                popup_79e2e9987ae27fc791825d5d1847d9c9.setContent(html_208a96bed9d235653f731539427a08ab);
+            
+        
+
+        circle_marker_e91586d89bdc7a510c0a25f1a285eafe.bindPopup(popup_79e2e9987ae27fc791825d5d1847d9c9)
+        ;
+
+        
+    
+    
+            circle_marker_e91586d89bdc7a510c0a25f1a285eafe.bindTooltip(
+                `<div>
+                     Lumen - 150 Varick
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0e145d0fb252d6589b6a5f784d395c27 = L.circleMarker(
+                [40.7282, -74.0066],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_7381d744babfea116e220698b6132f5b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b39f409f5fbb02c76dd941be916f7464 = $(`<div id="html_b39f409f5fbb02c76dd941be916f7464" style="width: 100.0%; height: 100.0%;">121 Varick</div>`)[0];
+                popup_7381d744babfea116e220698b6132f5b.setContent(html_b39f409f5fbb02c76dd941be916f7464);
+            
+        
+
+        circle_marker_0e145d0fb252d6589b6a5f784d395c27.bindPopup(popup_7381d744babfea116e220698b6132f5b)
+        ;
+
+        
+    
+    
+            circle_marker_0e145d0fb252d6589b6a5f784d395c27.bindTooltip(
+                `<div>
+                     121 Varick
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_09d3901153355fd58a559aee55cd2367 = L.circleMarker(
+                [40.7209, -74.0048],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_6b299d69d32e45d82e270ff2535ecfcc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6dad1256e4ea68b981ef57e41cd2503d = $(`<div id="html_6dad1256e4ea68b981ef57e41cd2503d" style="width: 100.0%; height: 100.0%;">365 DC - NY4</div>`)[0];
+                popup_6b299d69d32e45d82e270ff2535ecfcc.setContent(html_6dad1256e4ea68b981ef57e41cd2503d);
+            
+        
+
+        circle_marker_09d3901153355fd58a559aee55cd2367.bindPopup(popup_6b299d69d32e45d82e270ff2535ecfcc)
+        ;
+
+        
+    
+    
+            circle_marker_09d3901153355fd58a559aee55cd2367.bindTooltip(
+                `<div>
+                     365 DC - NY4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e33a658b0ff4d203ffbdd4a50f0a4ceb = L.circleMarker(
+                [40.717, -74.0087],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_8bef5db1d695f727aafb722d2f97ee7f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fa0dcb3cbe7f211ce426f1bbdf055337 = $(`<div id="html_fa0dcb3cbe7f211ce426f1bbdf055337" style="width: 100.0%; height: 100.0%;">60 Hudson</div>`)[0];
+                popup_8bef5db1d695f727aafb722d2f97ee7f.setContent(html_fa0dcb3cbe7f211ce426f1bbdf055337);
+            
+        
+
+        circle_marker_e33a658b0ff4d203ffbdd4a50f0a4ceb.bindPopup(popup_8bef5db1d695f727aafb722d2f97ee7f)
+        ;
+
+        
+    
+    
+            circle_marker_e33a658b0ff4d203ffbdd4a50f0a4ceb.bindTooltip(
+                `<div>
+                     60 Hudson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9b5c119dff11e7eef88636e85b0b235c = L.circleMarker(
+                [40.7113, -74.0007],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_3527a0c1c88a2f36248ae62264fab1d7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e80501f69d227967051051aab0071f9b = $(`<div id="html_e80501f69d227967051051aab0071f9b" style="width: 100.0%; height: 100.0%;">SDC Manhattan</div>`)[0];
+                popup_3527a0c1c88a2f36248ae62264fab1d7.setContent(html_e80501f69d227967051051aab0071f9b);
+            
+        
+
+        circle_marker_9b5c119dff11e7eef88636e85b0b235c.bindPopup(popup_3527a0c1c88a2f36248ae62264fab1d7)
+        ;
+
+        
+    
+    
+            circle_marker_9b5c119dff11e7eef88636e85b0b235c.bindTooltip(
+                `<div>
+                     SDC Manhattan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_758779369d2d471a847656bd458cc436 = L.circleMarker(
+                [40.7088, -74.0065],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_345e4a4fa11a2ce9a28a3e89b667bc48 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cc8844ea5b303f041f92e2b26e122131 = $(`<div id="html_cc8844ea5b303f041f92e2b26e122131" style="width: 100.0%; height: 100.0%;">NYI - 100 William</div>`)[0];
+                popup_345e4a4fa11a2ce9a28a3e89b667bc48.setContent(html_cc8844ea5b303f041f92e2b26e122131);
+            
+        
+
+        circle_marker_758779369d2d471a847656bd458cc436.bindPopup(popup_345e4a4fa11a2ce9a28a3e89b667bc48)
+        ;
+
+        
+    
+    
+            circle_marker_758779369d2d471a847656bd458cc436.bindTooltip(
+                `<div>
+                     NYI - 100 William
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4e4574c5cb7333fecafb034b9205857b = L.circleMarker(
+                [40.7061, -74.0132],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_12d30dcf0b38e0f06f07f3ec40c70a38 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fba9454cead7f44b7eb34ddea3668932 = $(`<div id="html_fba9454cead7f44b7eb34ddea3668932" style="width: 100.0%; height: 100.0%;">365 DC - NY1</div>`)[0];
+                popup_12d30dcf0b38e0f06f07f3ec40c70a38.setContent(html_fba9454cead7f44b7eb34ddea3668932);
+            
+        
+
+        circle_marker_4e4574c5cb7333fecafb034b9205857b.bindPopup(popup_12d30dcf0b38e0f06f07f3ec40c70a38)
+        ;
+
+        
+    
+    
+            circle_marker_4e4574c5cb7333fecafb034b9205857b.bindTooltip(
+                `<div>
+                     365 DC - NY1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d004109bc1febe688c019c11c283944e = L.circleMarker(
+                [40.7056, -74.0135],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_2579efac17b34d11a627f7042cc61b25 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3458a61cbeb410963f1aee5c51f58170 = $(`<div id="html_3458a61cbeb410963f1aee5c51f58170" style="width: 100.0%; height: 100.0%;">Cogent - 25 Broadway</div>`)[0];
+                popup_2579efac17b34d11a627f7042cc61b25.setContent(html_3458a61cbeb410963f1aee5c51f58170);
+            
+        
+
+        circle_marker_d004109bc1febe688c019c11c283944e.bindPopup(popup_2579efac17b34d11a627f7042cc61b25)
+        ;
+
+        
+    
+    
+            circle_marker_d004109bc1febe688c019c11c283944e.bindTooltip(
+                `<div>
+                     Cogent - 25 Broadway
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3127f0f3ae2481a1d1983accf773353f = L.circleMarker(
+                [40.7045, -74.0112],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_6e9a00b57498f92d9135dab602639bf3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_310fce8f062d3bbec7369a648fee801d = $(`<div id="html_310fce8f062d3bbec7369a648fee801d" style="width: 100.0%; height: 100.0%;">75 Broad Street</div>`)[0];
+                popup_6e9a00b57498f92d9135dab602639bf3.setContent(html_310fce8f062d3bbec7369a648fee801d);
+            
+        
+
+        circle_marker_3127f0f3ae2481a1d1983accf773353f.bindPopup(popup_6e9a00b57498f92d9135dab602639bf3)
+        ;
+
+        
+    
+    
+            circle_marker_3127f0f3ae2481a1d1983accf773353f.bindTooltip(
+                `<div>
+                     75 Broad Street
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ca3013e2ce04b1e978c50500e4df6cb6 = L.circleMarker(
+                [40.7032, -74.0131],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_e961711056cd5ace3b2b6de4efa43ba4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_337ec9c1826b99603131a960634d4982 = $(`<div id="html_337ec9c1826b99603131a960634d4982" style="width: 100.0%; height: 100.0%;">Telehouse Briad</div>`)[0];
+                popup_e961711056cd5ace3b2b6de4efa43ba4.setContent(html_337ec9c1826b99603131a960634d4982);
+            
+        
+
+        circle_marker_ca3013e2ce04b1e978c50500e4df6cb6.bindPopup(popup_e961711056cd5ace3b2b6de4efa43ba4)
+        ;
+
+        
+    
+    
+            circle_marker_ca3013e2ce04b1e978c50500e4df6cb6.bindTooltip(
+                `<div>
+                     Telehouse Briad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c2db350d3ea9edbaf8dc06d4bd35a9f9 = L.circleMarker(
+                [40.904, -73.3432],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_a3ff1b818f69d86ba8dc7a95522de080 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bb921bfcd21ac26bfa5aeda35024c3c1 = $(`<div id="html_bb921bfcd21ac26bfa5aeda35024c3c1" style="width: 100.0%; height: 100.0%;">Northport, NY (Cable Landing)</div>`)[0];
+                popup_a3ff1b818f69d86ba8dc7a95522de080.setContent(html_bb921bfcd21ac26bfa5aeda35024c3c1);
+            
+        
+
+        circle_marker_c2db350d3ea9edbaf8dc06d4bd35a9f9.bindPopup(popup_a3ff1b818f69d86ba8dc7a95522de080)
+        ;
+
+        
+    
+    
+            circle_marker_c2db350d3ea9edbaf8dc06d4bd35a9f9.bindTooltip(
+                `<div>
+                     Northport, NY (Cable Landing)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c165ccbbea59ba58a0d7a6814b2a475e = L.circleMarker(
+                [40.6018, -73.654],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_aff075980f22cfd420244923ae33e169 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6babbe2d68a79c28939f193291ef211d = $(`<div id="html_6babbe2d68a79c28939f193291ef211d" style="width: 100.0%; height: 100.0%;">Island Park, NY (Cable Landing)</div>`)[0];
+                popup_aff075980f22cfd420244923ae33e169.setContent(html_6babbe2d68a79c28939f193291ef211d);
+            
+        
+
+        circle_marker_c165ccbbea59ba58a0d7a6814b2a475e.bindPopup(popup_aff075980f22cfd420244923ae33e169)
+        ;
+
+        
+    
+    
+            circle_marker_c165ccbbea59ba58a0d7a6814b2a475e.bindTooltip(
+                `<div>
+                     Island Park, NY (Cable Landing)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8bcc5a0446da5387406859a13076fcb0 = L.circleMarker(
+                [40.7576, -72.9395],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_b64783790acd3eb691697a45dc62fd8a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0ff5ed48737793126f2f50813fd52e7b = $(`<div id="html_0ff5ed48737793126f2f50813fd52e7b" style="width: 100.0%; height: 100.0%;">Bellport, NY (Cable Landing)</div>`)[0];
+                popup_b64783790acd3eb691697a45dc62fd8a.setContent(html_0ff5ed48737793126f2f50813fd52e7b);
+            
+        
+
+        circle_marker_8bcc5a0446da5387406859a13076fcb0.bindPopup(popup_b64783790acd3eb691697a45dc62fd8a)
+        ;
+
+        
+    
+    
+            circle_marker_8bcc5a0446da5387406859a13076fcb0.bindTooltip(
+                `<div>
+                     Bellport, NY (Cable Landing)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_640acc955eaf56f89c0f826def048d82 = L.circleMarker(
+                [40.8357, -72.9389],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_4458417e2995057bee41d27c5d0fec93 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_91ef29f66678ab28484ed998e2ef1053 = $(`<div id="html_91ef29f66678ab28484ed998e2ef1053" style="width: 100.0%; height: 100.0%;">Brookhaven, NY (Cable Landing)</div>`)[0];
+                popup_4458417e2995057bee41d27c5d0fec93.setContent(html_91ef29f66678ab28484ed998e2ef1053);
+            
+        
+
+        circle_marker_640acc955eaf56f89c0f826def048d82.bindPopup(popup_4458417e2995057bee41d27c5d0fec93)
+        ;
+
+        
+    
+    
+            circle_marker_640acc955eaf56f89c0f826def048d82.bindTooltip(
+                `<div>
+                     Brookhaven, NY (Cable Landing)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_23d41b531f2bad54cbe210b9705a01ab = L.circleMarker(
+                [40.8015, -72.8676],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_142daf55123495af6526222a5d23f290 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aad9cf6094735e69eee48f2e3d3fcc41 = $(`<div id="html_aad9cf6094735e69eee48f2e3d3fcc41" style="width: 100.0%; height: 100.0%;">Shirley, NY (Cable Landing)</div>`)[0];
+                popup_142daf55123495af6526222a5d23f290.setContent(html_aad9cf6094735e69eee48f2e3d3fcc41);
+            
+        
+
+        circle_marker_23d41b531f2bad54cbe210b9705a01ab.bindPopup(popup_142daf55123495af6526222a5d23f290)
+        ;
+
+        
+    
+    
+            circle_marker_23d41b531f2bad54cbe210b9705a01ab.bindTooltip(
+                `<div>
+                     Shirley, NY (Cable Landing)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cc38f23872fa3b1b68cbf85bc46f40ce = L.circleMarker(
+                [40.9518, -72.8984],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_71fdbae36a3875806c2e0fa34261a525 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dd5bd993055da47964cc34cac630afc7 = $(`<div id="html_dd5bd993055da47964cc34cac630afc7" style="width: 100.0%; height: 100.0%;">Shoreham, NY (Cable Landing)</div>`)[0];
+                popup_71fdbae36a3875806c2e0fa34261a525.setContent(html_dd5bd993055da47964cc34cac630afc7);
+            
+        
+
+        circle_marker_cc38f23872fa3b1b68cbf85bc46f40ce.bindPopup(popup_71fdbae36a3875806c2e0fa34261a525)
+        ;
+
+        
+    
+    
+            circle_marker_cc38f23872fa3b1b68cbf85bc46f40ce.bindTooltip(
+                `<div>
+                     Shoreham, NY (Cable Landing)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_187a743f3b4b896bebb7c3262969a895 = L.circleMarker(
+                [40.7056, -74.0135],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_631cd6adf1160e8232724df744745410 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ed531b69b614d4c48b08e721c20a15a3 = $(`<div id="html_ed531b69b614d4c48b08e721c20a15a3" style="width: 100.0%; height: 100.0%;">NYIIX - 25 Broadway</div>`)[0];
+                popup_631cd6adf1160e8232724df744745410.setContent(html_ed531b69b614d4c48b08e721c20a15a3);
+            
+        
+
+        circle_marker_187a743f3b4b896bebb7c3262969a895.bindPopup(popup_631cd6adf1160e8232724df744745410)
+        ;
+
+        
+    
+    
+            circle_marker_187a743f3b4b896bebb7c3262969a895.bindTooltip(
+                `<div>
+                     NYIIX - 25 Broadway
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9e952b1594a8f85e9636b772767a0799 = L.circleMarker(
+                [40.717, -74.0087],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_2e1968f79e24b29a3ff7a9989cb197c8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e882b7097085888806b111f5691ff0a8 = $(`<div id="html_e882b7097085888806b111f5691ff0a8" style="width: 100.0%; height: 100.0%;">NYIIX - 60 Hudson</div>`)[0];
+                popup_2e1968f79e24b29a3ff7a9989cb197c8.setContent(html_e882b7097085888806b111f5691ff0a8);
+            
+        
+
+        circle_marker_9e952b1594a8f85e9636b772767a0799.bindPopup(popup_2e1968f79e24b29a3ff7a9989cb197c8)
+        ;
+
+        
+    
+    
+            circle_marker_9e952b1594a8f85e9636b772767a0799.bindTooltip(
+                `<div>
+                     NYIIX - 60 Hudson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1eabbe95a2efeb78cf0ab04ec233be91 = L.circleMarker(
+                [40.6066, -74.1872],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_71fba10db38522e12c28c01b8f938873 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_862c63d66510df50db09d4cf985c465a = $(`<div id="html_862c63d66510df50db09d4cf985c465a" style="width: 100.0%; height: 100.0%;">NYIIX - 7 Teleport Staten Island</div>`)[0];
+                popup_71fba10db38522e12c28c01b8f938873.setContent(html_862c63d66510df50db09d4cf985c465a);
+            
+        
+
+        circle_marker_1eabbe95a2efeb78cf0ab04ec233be91.bindPopup(popup_71fba10db38522e12c28c01b8f938873)
+        ;
+
+        
+    
+    
+            circle_marker_1eabbe95a2efeb78cf0ab04ec233be91.bindTooltip(
+                `<div>
+                     NYIIX - 7 Teleport Staten Island
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_69c426556c29f7244a0f71fbf026d3bb = L.circleMarker(
+                [40.741, -74.0027],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_55e3081d99974f84b3424105802d0449 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f96e0bbdc7c8ce7276ba9c590c030f3b = $(`<div id="html_f96e0bbdc7c8ce7276ba9c590c030f3b" style="width: 100.0%; height: 100.0%;">NYIIX - 111 8th</div>`)[0];
+                popup_55e3081d99974f84b3424105802d0449.setContent(html_f96e0bbdc7c8ce7276ba9c590c030f3b);
+            
+        
+
+        circle_marker_69c426556c29f7244a0f71fbf026d3bb.bindPopup(popup_55e3081d99974f84b3424105802d0449)
+        ;
+
+        
+    
+    
+            circle_marker_69c426556c29f7244a0f71fbf026d3bb.bindTooltip(
+                `<div>
+                     NYIIX - 111 8th
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0cd37f313289864d1212f00f7d7007d3 = L.circleMarker(
+                [40.7425, -74.006],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_5be32773dfc783d9f8cbdf88a8f796ca = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e767ae20df71cbdc8bc75ec5488f8a8f = $(`<div id="html_e767ae20df71cbdc8bc75ec5488f8a8f" style="width: 100.0%; height: 100.0%;">NYIIX - 85 10th Ave</div>`)[0];
+                popup_5be32773dfc783d9f8cbdf88a8f796ca.setContent(html_e767ae20df71cbdc8bc75ec5488f8a8f);
+            
+        
+
+        circle_marker_0cd37f313289864d1212f00f7d7007d3.bindPopup(popup_5be32773dfc783d9f8cbdf88a8f796ca)
+        ;
+
+        
+    
+    
+            circle_marker_0cd37f313289864d1212f00f7d7007d3.bindTooltip(
+                `<div>
+                     NYIIX - 85 10th Ave
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b33b850304b22f63522a739b455c07aa = L.circleMarker(
+                [40.717, -74.0087],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_22fbc3a8fb3fae28b70ff97d28f25929 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0bd649f1a4c01c52f79fdfb846246de6 = $(`<div id="html_0bd649f1a4c01c52f79fdfb846246de6" style="width: 100.0%; height: 100.0%;">Digital Realty IX - 60 Hudson</div>`)[0];
+                popup_22fbc3a8fb3fae28b70ff97d28f25929.setContent(html_0bd649f1a4c01c52f79fdfb846246de6);
+            
+        
+
+        circle_marker_b33b850304b22f63522a739b455c07aa.bindPopup(popup_22fbc3a8fb3fae28b70ff97d28f25929)
+        ;
+
+        
+    
+    
+            circle_marker_b33b850304b22f63522a739b455c07aa.bindTooltip(
+                `<div>
+                     Digital Realty IX - 60 Hudson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_44737e3264cd3c26dcb93445ee6d1763 = L.circleMarker(
+                [40.741, -74.0027],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_4ac091846aaf7d41b96b87f505447e7f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eedfd8c0f36ed9d9fbaae9171b3a2628 = $(`<div id="html_eedfd8c0f36ed9d9fbaae9171b3a2628" style="width: 100.0%; height: 100.0%;">Digital Realty IX - 111 8th</div>`)[0];
+                popup_4ac091846aaf7d41b96b87f505447e7f.setContent(html_eedfd8c0f36ed9d9fbaae9171b3a2628);
+            
+        
+
+        circle_marker_44737e3264cd3c26dcb93445ee6d1763.bindPopup(popup_4ac091846aaf7d41b96b87f505447e7f)
+        ;
+
+        
+    
+    
+            circle_marker_44737e3264cd3c26dcb93445ee6d1763.bindTooltip(
+                `<div>
+                     Digital Realty IX - 111 8th
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0f2d33545e309ddad3e2f7a87286a98e = L.circleMarker(
+                [40.8573, -74.1374],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_22ed4381938b3ae75b3a3aa18cd5af78 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_201b60e344a2f9b59d11bb29211a6eea = $(`<div id="html_201b60e344a2f9b59d11bb29211a6eea" style="width: 100.0%; height: 100.0%;">Digital Realty IX - 100 Delawanna, Clifton</div>`)[0];
+                popup_22ed4381938b3ae75b3a3aa18cd5af78.setContent(html_201b60e344a2f9b59d11bb29211a6eea);
+            
+        
+
+        circle_marker_0f2d33545e309ddad3e2f7a87286a98e.bindPopup(popup_22ed4381938b3ae75b3a3aa18cd5af78)
+        ;
+
+        
+    
+    
+            circle_marker_0f2d33545e309ddad3e2f7a87286a98e.bindTooltip(
+                `<div>
+                     Digital Realty IX - 100 Delawanna, Clifton
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c59dc7cf97581986741bb2f8be742a3c = L.circleMarker(
+                [40.7428, -74.0041],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_17ca70d7504cfb7d9b53799e99949fb9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c03698ea993b9718dbc864ea89bff852 = $(`<div id="html_c03698ea993b9718dbc864ea89bff852" style="width: 100.0%; height: 100.0%;">Equinix-NY (former Paix) - 76 9th Ave</div>`)[0];
+                popup_17ca70d7504cfb7d9b53799e99949fb9.setContent(html_c03698ea993b9718dbc864ea89bff852);
+            
+        
+
+        circle_marker_c59dc7cf97581986741bb2f8be742a3c.bindPopup(popup_17ca70d7504cfb7d9b53799e99949fb9)
+        ;
+
+        
+    
+    
+            circle_marker_c59dc7cf97581986741bb2f8be742a3c.bindTooltip(
+                `<div>
+                     Equinix-NY (former Paix) - 76 9th Ave
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b2d8c33ab81a610baa7662c2f5e41b04 = L.circleMarker(
+                [40.741, -74.0027],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_e34f585ff925ca7be2853dcdd0672b42 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fbfd83fdfb3ef50196c3024b140b6fb9 = $(`<div id="html_fbfd83fdfb3ef50196c3024b140b6fb9" style="width: 100.0%; height: 100.0%;">Equinix New York IBX</div>`)[0];
+                popup_e34f585ff925ca7be2853dcdd0672b42.setContent(html_fbfd83fdfb3ef50196c3024b140b6fb9);
+            
+        
+
+        circle_marker_b2d8c33ab81a610baa7662c2f5e41b04.bindPopup(popup_e34f585ff925ca7be2853dcdd0672b42)
+        ;
+
+        
+    
+    
+            circle_marker_b2d8c33ab81a610baa7662c2f5e41b04.bindTooltip(
+                `<div>
+                     Equinix New York IBX
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a9ac617f1e946e397e9f50f170f9dad5 = L.circleMarker(
+                [40.717, -74.0087],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_1f5576bc4f2fee41bec9c02df0d21a4f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_27720fe7d2d3baad5e6318e0847d56d3 = $(`<div id="html_27720fe7d2d3baad5e6318e0847d56d3" style="width: 100.0%; height: 100.0%;">Peer 1 Internet Exchange</div>`)[0];
+                popup_1f5576bc4f2fee41bec9c02df0d21a4f.setContent(html_27720fe7d2d3baad5e6318e0847d56d3);
+            
+        
+
+        circle_marker_a9ac617f1e946e397e9f50f170f9dad5.bindPopup(popup_1f5576bc4f2fee41bec9c02df0d21a4f)
+        ;
+
+        
+    
+    
+            circle_marker_a9ac617f1e946e397e9f50f170f9dad5.bindTooltip(
+                `<div>
+                     Peer 1 Internet Exchange
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8271a5b00a6b9ab0a3500271fcebb373 = L.circleMarker(
+                [40.717, -74.0087],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_d1209b0abffec685f20c698f194fa365 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad53ba26e3d91a78a969c7d9eb8cd880 = $(`<div id="html_ad53ba26e3d91a78a969c7d9eb8cd880" style="width: 100.0%; height: 100.0%;">Big Apple Peering Exchange</div>`)[0];
+                popup_d1209b0abffec685f20c698f194fa365.setContent(html_ad53ba26e3d91a78a969c7d9eb8cd880);
+            
+        
+
+        circle_marker_8271a5b00a6b9ab0a3500271fcebb373.bindPopup(popup_d1209b0abffec685f20c698f194fa365)
+        ;
+
+        
+    
+    
+            circle_marker_8271a5b00a6b9ab0a3500271fcebb373.bindTooltip(
+                `<div>
+                     Big Apple Peering Exchange
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_840b519357035b6a8f9270f042debf85 = L.circleMarker(
+                [40.717, -74.0087],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_fae3a021a9e5775b347ab215f01f2133 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b7d1f3aa7254241170b373bfa7ced972 = $(`<div id="html_b7d1f3aa7254241170b373bfa7ced972" style="width: 100.0%; height: 100.0%;">DE-CIX New York</div>`)[0];
+                popup_fae3a021a9e5775b347ab215f01f2133.setContent(html_b7d1f3aa7254241170b373bfa7ced972);
+            
+        
+
+        circle_marker_840b519357035b6a8f9270f042debf85.bindPopup(popup_fae3a021a9e5775b347ab215f01f2133)
+        ;
+
+        
+    
+    
+            circle_marker_840b519357035b6a8f9270f042debf85.bindTooltip(
+                `<div>
+                     DE-CIX New York
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4fcceefa8665170ddd7f08314d6350d3 = L.circleMarker(
+                [40.7209, -74.0048],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9);
+        
+    
+        var popup_4f8b16f05ba378d811729ef46dc31b64 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3787e3b56c81767c9da3e2e7d3979718 = $(`<div id="html_3787e3b56c81767c9da3e2e7d3979718" style="width: 100.0%; height: 100.0%;">CoreSite - 32 6th Ave</div>`)[0];
+                popup_4f8b16f05ba378d811729ef46dc31b64.setContent(html_3787e3b56c81767c9da3e2e7d3979718);
+            
+        
+
+        circle_marker_4fcceefa8665170ddd7f08314d6350d3.bindPopup(popup_4f8b16f05ba378d811729ef46dc31b64)
+        ;
+
+        
+    
+    
+            circle_marker_4fcceefa8665170ddd7f08314d6350d3.bindTooltip(
+                `<div>
+                     CoreSite - 32 6th Ave
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_c3aa2a01bf31d6732a0130e05dcfd4e9.addTo(map_c6d941eaa9038274b2bdfc846992b5cc);
+        
+</script>
+</html>
