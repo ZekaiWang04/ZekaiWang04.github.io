@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Playfair+Display:wght@600&display=swap');
+
+:root {
+  --page-bg: #050b0f;
+  --panel-overlay: rgba(5, 11, 15, 0.55);
+  --text-body: #e6ede7;
+  --text-soft: #b6c4bf;
+  --accent: #8dd8b7;
+  --blur-max: 18px;
+  --shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(32, 88, 70, 0.07), transparent 25%),
+              radial-gradient(circle at 80% 40%, rgba(61, 123, 168, 0.07), transparent 22%),
+              var(--page-bg);
+  color: var(--text-body);
+  font-family: "Space Grotesk", "Helvetica Neue", "Segoe UI", sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.page-shell {
+  min-height: 100vh;
+}
+
+.hero {
+  min-height: 70vh;
+  padding: clamp(2.5rem, 6vw, 4.5rem);
+  display: grid;
+  align-content: center;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+h1 {
+  margin: 0;
+  font-family: "Playfair Display", "Space Grotesk", serif;
+  font-size: clamp(2.6rem, 4vw, 3.6rem);
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  max-width: 720px;
+  color: var(--text-soft);
+}
+
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.scroll-cue::after {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: currentColor;
+  display: inline-block;
+  transform-origin: left;
+  animation: glide 2s ease-in-out infinite;
+}
+
+@keyframes glide {
+  0% { transform: scaleX(0.1); opacity: 0.4; }
+  50% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(0.1); opacity: 0.4; }
+}
+
+.scene {
+  position: relative;
+  height: 230vh;
+  --progress: 0;
+  --reveal: 0;
+}
+
+.scene-inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.scene-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center center;
+  filter: blur(calc(var(--progress) * var(--blur-max))) brightness(0.9);
+  transform: scale(1.06);
+  transition: filter 0.18s ease-out;
+  z-index: -2;
+}
+
+.scene-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.25), transparent 30%),
+              linear-gradient(120deg, rgba(5, 11, 15, 0.55), rgba(5, 11, 15, 0.25));
+  opacity: calc(0.35 + 0.45 * var(--progress));
+  z-index: -1;
+}
+
+.scene-content {
+  max-width: 900px;
+  padding: clamp(1.75rem, 5vw, 2.75rem);
+  background: linear-gradient(140deg, rgba(5, 11, 15, 0.82), rgba(5, 11, 15, 0.7));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  opacity: var(--reveal);
+  transform: translateY(calc(30px - 30px * var(--reveal)));
+  transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+  position: relative;
+  z-index: 1;
+}
+
+.scene-content h2 {
+  margin: 0 0 0.5rem 0;
+  font-family: "Playfair Display", "Space Grotesk", serif;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  letter-spacing: -0.015em;
+}
+
+.scene-content .kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.scene-content p {
+  margin: 0.2rem 0 0.8rem 0;
+  color: var(--text-soft);
+}
+
+.credits {
+  padding: 3rem clamp(2rem, 6vw, 4rem) 4rem;
+  color: var(--text-soft);
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.spacer {
+  height: 12vh;
+  min-height: 96px;
+  display: block;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .scene {
+    align-items: flex-end;
+  }
+
+  .scene-content {
+    border-radius: 16px;
+    padding: 1.25rem;
+  }
+
+  .scene-content h2 {
+    font-size: clamp(1.6rem, 6vw, 2rem);
+  }
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IB11 Final Website</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">IB 11 Final Project</p>
+        <h1>Fishing, Chinese American, and Californian Marine Ecology</h1>
+        <p class="lede">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod.
+        </p>
+        <div class="scroll-cue">Scroll</div>
+      </header>
+
+      <section class="scene" style="--bg: url('static/dummy_image1.png')">
+        <div class="scene-inner">
+          <div class="scene-content">
+            <div class="kicker">Lorem Ipsum</div>
+            <h2>Consectetur Elit</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+            </p>
+            <p>
+              Cras mattis consectetur purus sit amet fermentum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" style="--bg: url('static/dummy_image1.png')">
+        <div class="scene-inner">
+          <div class="scene-content">
+            <div class="kicker">Dolor Sit</div>
+            <h2>Amet Vestibulum</h2>
+            <p>
+              Maecenas faucibus mollis interdum. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+            </p>
+            <p>
+              Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" style="--bg: url('static/dummy_image1.png')">
+        <div class="scene-inner">
+          <div class="scene-content">
+            <div class="kicker">Elit Mollis</div>
+            <h2>Pharetra Tellus</h2>
+            <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.
+            </p>
+            <p>
+              Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" style="--bg: url('static/dummy_image1.png')">
+        <div class="scene-inner">
+          <div class="scene-content">
+            <div class="kicker">Ridiculus</div>
+            <h2>Justo Tristique</h2>
+            <p>
+              Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            </p>
+            <p>
+              Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="credits">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
+        </p>
+      </section>
+    </div>
+
+    <script>
+      const scenes = Array.from(document.querySelectorAll('.scene'));
+      const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+      let ticking = false;
+
+      function updateScenes() {
+        const viewportHeight = window.innerHeight;
+        const startBuffer = viewportHeight * 0.2; // hold at image before revealing
+        const endBuffer = viewportHeight * 0.3;   // hold after reveal
+
+        scenes.forEach((scene) => {
+          const rect = scene.getBoundingClientRect();
+          const total = Math.max(1, rect.height - viewportHeight);
+          const activeHeight = Math.max(1, total - startBuffer - endBuffer);
+          const progressRaw = (-rect.top - startBuffer) / activeHeight;
+          const progress = clamp(progressRaw);
+          const reveal = clamp((progress - 0.25) / 0.65);
+
+          scene.style.setProperty('--progress', progress.toFixed(3));
+          scene.style.setProperty('--reveal', reveal.toFixed(3));
+        });
+
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(updateScenes);
+          ticking = true;
+        }
+      }
+
+      document.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', updateScenes);
+      updateScenes();
+    </script>
+  </body>
+</html>
