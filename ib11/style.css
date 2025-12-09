@@ -174,9 +174,9 @@ h1 {
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  opacity: var(--reveal);
-  transform: translateY(calc(30px - 30px * var(--reveal)));
-  transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+  opacity: 1;
+  transform: none;
+  transition: none;
   position: relative;
   z-index: 1;
 }
