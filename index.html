@@ -1,15 +1,66 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Zekai Wang's Personal Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zekai Wang | UC Berkeley</title>
+<meta name="description" content="Zekai Wang is a UC Berkeley undergraduate researcher at BAIR working on robot learning, dexterous manipulation, and efficient learning systems.">
+<link rel="canonical" href="https://zekaiwang04.github.io/">
+<style>
+:root{color-scheme:light;--ink:#202b36;--muted:#596573;--link:#165c92;--line:#dce3e8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:860px;margin:auto;padding:64px 28px 28px}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}a:focus-visible,summary:focus-visible{outline:3px solid #88b9dd;outline-offset:4px}
+header{padding-bottom:28px;border-bottom:1px solid var(--line)}.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}h1{font-size:42px;line-height:1.15;letter-spacing:-.035em;margin:0 0 22px;font-weight:650}
+h2{font-size:23px;letter-spacing:-.02em;line-height:1.3;margin:0 0 16px}h3{font-size:16px;line-height:1.5;margin:0 0 4px}p{margin:0 0 14px}nav,.contact{display:flex;flex-wrap:wrap;gap:9px 22px}.contact{margin-top:22px}nav{font-size:14px;margin-top:24px}section{padding-top:34px}.subtle,.authors,.venue{color:var(--muted);font-size:14px}.paper{padding:20px 0;border-bottom:1px solid var(--line)}.paper:first-of-type{padding-top:6px}.paper p{margin:7px 0 0}.paper .links{font-size:14px;display:flex;gap:18px;flex-wrap:wrap}.venue{margin-top:3px}.project-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.project-grid p{font-size:15px}.teaching{padding-left:20px;font-size:15px}.teaching li{margin-bottom:4px}details{margin-top:12px}summary{cursor:pointer;color:var(--link)}.course-links{display:flex;gap:8px 20px;flex-wrap:wrap;margin:12px 0;font-size:14px}footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:var(--muted);font-size:12px}.skip{position:absolute;top:-80px;left:16px;padding:8px;background:white}.skip:focus{top:8px}@media(max-width:600px){main{padding:36px 22px 24px}h1{font-size:36px}.project-grid{grid-template-columns:1fr;gap:12px}nav{gap:8px 16px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{main{padding:0;max-width:none}nav,.skip{display:none}.paper{break-inside:avoid}a{color:inherit}}
+</style>
 </head>
 <body>
-    <h1>Hi! I'm Zekai, a third-year undergrad at UC Berkeley studying CS and Mathematics. You can contact me through <a href="mailto:zekai.wang@berkeley.edu">zekai.wang@berkeley.edu</a>. The website is still under construction...</h1>
+<a class="skip" href="#research">Skip to research</a>
+<main>
+<header>
+<p class="eyebrow">University of California, Berkeley</p>
+<h1>Zekai Wang</h1>
+<p>I am an undergraduate at UC Berkeley studying Computer Science and Applied Mathematics, with graduation expected in December 2026. I conduct research in Professor <a href="https://people.eecs.berkeley.edu/~trevor/">Trevor Darrell</a>’s group at <a href="https://bair.berkeley.edu/">Berkeley Artificial Intelligence Research (BAIR)</a>.</p>
+<p>My research spans robot learning and dexterous manipulation, including tactile feedback, learning from human video, and in-context learning. I also build the data, training, and inference systems that make learning-based policies work on real robots.</p>
+<div class="contact" aria-label="Contact and profiles">
+<a href="mailto:zekai.wang@berkeley.edu">Email</a>
+<a href="mailto:zekai.wang@berkeley.edu?subject=CV%20request">CV by email</a>
+<a href="https://scholar.google.com/citations?user=Dngm3CYAAAAJ">Google Scholar</a>
+<a href="https://github.com/ZekaiWang04">GitHub</a>
+</div>
+<nav aria-label="Page sections"><a href="#research">Research interests</a><a href="#publications">Publications</a><a href="#projects">Selected projects</a><a href="#teaching">Teaching</a></nav>
+</header>
+<section id="research">
+<h2>Research interests</h2>
+<p>I am interested in learning from diverse sources of data and building efficient systems for training and deploying foundation models. My work has explored imitation and reinforcement learning, visuo-tactile policies, and the use of human demonstrations and generated video for robot control. I am particularly interested in how model architecture, data pipelines, and execution systems jointly shape a model’s capabilities.</p>
+</section>
+<section id="publications">
+<h2>Publications &amp; preprints</h2>
+<p class="subtle">* Equal contribution. Longer author lists are abbreviated; linked papers contain the complete lists.</p>
+<article class="paper"><h3><a href="https://arxiv.org/abs/2610.19495">Robota-Embed: Unified VLA Embeddings for Robot In-Context Learning and Evolution</a></h3><div class="authors">Yunze Liu, Jing Wang, Shenrui Wu, et al., <strong>Zekai Wang</strong>, et al.</div><div class="venue">Preprint · 2026</div><p>Unified vision-language-action embeddings for retrieving useful robot experience.</p><p class="links"><a href="https://arxiv.org/abs/2610.19495">Paper</a><a href="https://robota-ai.github.io/robota-embed/">Project &amp; demos</a></p></article>
+<article class="paper"><h3><a href="https://arxiv.org/abs/2609.24976">DexTacWAM: A Visuo-Tactile World-Action Model for Dexterous Manipulation</a></h3><div class="authors">Haoran Yuan, <strong>Zekai Wang</strong>, Boning Shao, Haoran Lu, Trevor Darrell, Ismini Lourentzou, Wei Zhan</div><div class="venue">Preprint · 2026</div><p>Extending pretrained video world models to predict visual and multi-finger contact dynamics for dexterous control.</p><p class="links"><a href="https://arxiv.org/abs/2609.24976">Paper</a><a href="https://dextacwam.github.io/">Project &amp; demos</a></p></article>
+<article class="paper"><h3><a href="https://arxiv.org/abs/2606.17055">T-Rex: Tactile-Reactive Dexterous Manipulation</a></h3><div class="authors">Dantong Niu*, Zhuoyang Liu*, <strong>Zekai Wang*</strong>, et al.</div><div class="venue">CoRL 2026</div><p>Combining high-frequency tactile feedback with vision-language-action models for reactive dexterous manipulation.</p><p class="links"><a href="https://arxiv.org/abs/2606.17055">Paper</a><a href="https://tactile-reactive-dexterous.github.io/">Project &amp; demos</a><a href="https://github.com/ZhuoyangLiu2005/T-Rex">Code</a></p></article>
+<article class="paper"><h3><a href="https://arxiv.org/abs/2606.17256">Contrastive Action-Image Pre-training for Visuomotor Control</a></h3><div class="authors">Yuvan Sharma*, Dantong Niu*, Anirudh Pai*, <strong>Zekai Wang</strong>, et al.</div><div class="venue">Preprint · 2026</div><p>Learning action-centric visual representations from egocentric human video.</p><p class="links"><a href="https://arxiv.org/abs/2606.17256">Paper</a><a href="https://caip-encoder.github.io/">Project &amp; demos</a><a href="https://github.com/yuvansharma/caip_encoder">Code</a></p></article>
+<article class="paper"><h3><a href="https://arxiv.org/abs/2512.05094">From Generated Human Videos to Physically Plausible Robot Trajectories</a></h3><div class="authors">James Ni*, <strong>Zekai Wang*</strong>, Wei Lin*, Amir Bar*, Yann LeCun, Trevor Darrell, Jitendra Malik, Roei Herzig</div><div class="venue">Preprint · 2025</div><p>GenMimic translates generated human videos into humanoid motion through pose recovery, retargeting, and physics-aware reinforcement learning.</p><p class="links"><a href="https://arxiv.org/abs/2512.05094">Paper</a><a href="https://genmimic.github.io/">Project &amp; demos</a></p></article>
+<article class="paper"><h3><a href="https://arxiv.org/abs/2410.12782">In-Context Learning Enables Robot Action Prediction in LLMs</a></h3><div class="authors">Yida Yin*, <strong>Zekai Wang*</strong>, Yuvan Sharma, Dantong Niu, Trevor Darrell, Roei Herzig</div><div class="venue">ICRA 2025</div><p>RoboPrompt enables off-the-shelf text-only LLMs to predict robot actions from in-context demonstrations without additional training.</p><p class="links"><a href="https://arxiv.org/abs/2410.12782">Paper</a><a href="https://davidyyd.github.io/roboprompt/">Project &amp; demos</a><a href="https://github.com/davidyyd/roboprompt">Code</a></p></article>
+</section>
+<section id="projects">
+<h2>Selected systems &amp; projects</h2>
+<div class="project-grid">
+<article><h3>Real-time dexterous robot systems</h3><p>I designed a bimanual teleoperation system with tactile feedback and built multimodal data collection and processing pipelines. My inference work includes real-time action chunking and CUDA graph capture for smooth, reactive policy execution.</p><a href="https://tactile-reactive-dexterous.github.io/">T-Rex project →</a></article>
+<article><h3>Asynchronous reinforcement learning</h3><p>I implemented an online multi-GPU asynchronous RL training system, using dedicated KV-cache producer GPUs to reuse invariant model prefixes and reduce update latency.</p><span class="subtle">Ongoing research · see CV for background</span></article>
+</div>
+<details><summary>Course projects</summary>
+<p class="subtle">Computer vision and graphics coursework.</p>
+<div class="course-links"><a href="/cs180/proj1/">CS 180 · Project 1</a><a href="/cs180/proj2/">Project 2</a><a href="/cs180/proj3/">Project 3</a><a href="/cs180/proj4/">Project 4</a><a href="/cs180/proj5/">Project 5</a><a href="/cs180/nerf_proj/">NeRF</a><a href="/cs184/hw1/">CS 184 · Homework 1</a><a href="/cs184/hw2/">Homework 2</a><a href="/cs184/hw3/">Homework 3</a><a href="/cs184/hw4/">Homework 4</a></div>
+</details>
+</section>
+<section id="teaching">
+<h2>Teaching &amp; experience</h2>
+<p>I served on Berkeley course staff for five semesters, including as Head TA for DATA 100. I was also a Software Engineer Intern at Google in Summer 2025, working on LLM agent evaluation and tracing tools.</p>
+<ul class="teaching"><li>DATA 182 · Introduction to Deep Learning — TA, Spring 2026</li><li>EECS 126 · Probability and Random Processes — TA, Spring 2025</li><li>CS 189 · Introduction to Machine Learning — Tutor, Fall 2024; TA, Spring 2024</li><li>DATA 100 · Principles and Techniques of Data Science — Head TA, Summer 2024</li></ul>
+</section>
+<footer>Updated October 2026 · <a href="mailto:zekai.wang@berkeley.edu">zekai.wang@berkeley.edu</a></footer>
+</main>
 </body>
 </html>
