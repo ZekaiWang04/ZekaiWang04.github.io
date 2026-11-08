@@ -1,0 +1,117 @@
+/* Academic homepage stylesheet. Layout inspired by jonbarron.info. */
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --text: #222;
+  --muted: #666;
+  --link: #1772d0;
+  --link-hover: #f09228;
+  --rule: #e5e5e5;
+  --highlight: #ffffd0;
+  --bg: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover, a:focus { color: var(--link-hover); }
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+/* Header: bio on the left, photo on the right */
+.header {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  padding: 16px 0 24px;
+}
+.header .bio { flex: 1 1 60%; }
+.header .photo { flex: 0 0 200px; }
+.header .photo img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.name {
+  margin: 0 0 12px;
+  font-size: 34px;
+  font-weight: 400;
+}
+
+.links { margin-top: 12px; }
+.links a { white-space: nowrap; }
+.links .sep { color: var(--muted); margin: 0 6px; }
+
+h2 {
+  margin: 32px 0 8px;
+  font-size: 22px;
+  font-weight: 400;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 4px;
+}
+
+/* Publication / project rows */
+.paper {
+  display: flex;
+  gap: 28px;
+  padding: 18px 0;
+  align-items: center;
+}
+.paper .thumb {
+  flex: 0 0 360px;
+  width: 360px;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+.paper .desc { flex: 1; min-width: 0; font-size: 13.5px; line-height: 1.45; }
+.paper .title { font-weight: 700; font-size: 14.5px; }
+.paper .authors, .paper .venue { display: block; }
+.paper .venue { font-style: italic; color: var(--muted); }
+.paper .plinks { margin-top: 4px; }
+.paper .plinks a + a::before { content: "/ "; color: var(--muted); }
+.paper .summary { margin: 6px 0 0; }
+
+.me { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+span.highlight { background-color: var(--highlight); }
+
+.news ul { padding-left: 20px; margin: 8px 0; }
+.news li { margin: 4px 0; }
+
+footer {
+  margin-top: 48px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .header { flex-direction: column-reverse; align-items: center; text-align: center; }
+  .header .photo img { width: 160px; height: 160px; }
+  .paper { flex-direction: column; align-items: flex-start; }
+  .paper .thumb { flex: none; width: 100%; max-width: 480px; height: auto; }
+}
+
+/* Teaching list */
+.teaching { padding-left: 20px; margin: 8px 0; }
+.teaching li { margin: 5px 0; }
+
+sup { font-size: 0.7em; line-height: 0; }
