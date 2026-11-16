@@ -86,6 +86,7 @@ h2 {
 .paper .title { font-weight: 700; font-size: 14.5px; }
 .paper .authors, .paper .venue { display: block; }
 .paper .venue { font-style: italic; color: var(--muted); }
+.paper .award { display: block; font-weight: 700; }
 .paper .plinks { margin-top: 4px; }
 .paper .plinks a + a::before { content: "/ "; color: var(--muted); }
 .paper .summary { margin: 6px 0 0; }
