@@ -6,3 +6,4 @@ Personal academic website, served by GitHub Pages from the root of `main`.
 - `stylesheet.css` — styles.
 - `images/` — profile photo and paper/project thumbnails.
 - `data/` — CV and other downloadable files.
+- `trex_rl/` — project page.
